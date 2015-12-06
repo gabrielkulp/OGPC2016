@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class LandingShip : MonoBehaviour {
+public class AirplaneController : MonoBehaviour {
 	public Vector3 stabilizingDrag = new Vector3(0.5f, 1f, 0f);
 	public Vector3 drag = new Vector3(2f, 8f, 0.05f);
 	public float trim = 0.1f;
@@ -40,5 +40,12 @@ public class LandingShip : MonoBehaviour {
 			(Input.GetAxis("Vertical") - trim) * pitchTorque,
 			Input.GetAxis("Horizontal") * yawPortion * yawTorque,
 			Input.GetAxis("Horizontal") * rollTorque * -1));
+	}
+
+	void OnTriggerEnter (Collider other) {
+		if (other.gameObject.name != "Player")
+			return;
+
+		GameObject.Find("Player Controller").GetComponent<PlayerState>().state = playerMode.gliding;
 	}
 }

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class LandingCamFollow : MonoBehaviour {
+public class AirplaneCam : MonoBehaviour {
 	public Camera cam;
 	public Rigidbody follow;
 	public Vector3 offset;
@@ -9,9 +9,7 @@ public class LandingCamFollow : MonoBehaviour {
 	public AnimationCurve fovKick;
 	
 	void Start () {
-		//Setting these at the beginning helps make the lerping look better in the first few frames.
-		transform.position = follow.position + (follow.rotation * offset);
-		transform.LookAt(follow.position);
+		ResetPosition();		
 	}
 
 	void Update () {
@@ -37,5 +35,10 @@ public class LandingCamFollow : MonoBehaviour {
 		Quaternion oldRot = transform.rotation;
 		transform.LookAt(follow.position, Vector3.up);
 		transform.rotation = Quaternion.Lerp(oldRot, transform.rotation, smoothCam);
+	}
+
+	public void ResetPosition () {
+		transform.position = follow.position + (follow.rotation * offset);
+		transform.LookAt(follow.position);
 	}
 }
