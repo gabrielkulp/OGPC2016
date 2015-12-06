@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour {
 	CharacterController cc;
 	Vector3 ccMotion = Vector3.zero;
 
+	public bool canPush = true;
 	public float pushPower = 2f;
 
 	public float camSpeed = 8f;
@@ -21,29 +22,30 @@ public class PlayerMovement : MonoBehaviour {
 	}
 
 	void Update () {
-		if (cc.isGrounded) {
-			ccMotion = new Vector3(Input.GetAxis("Horizontal"), ccMotion.y / moveSpeed, Input.GetAxis("Vertical")) * moveSpeed;
-			ccMotion = transform.rotation * ccMotion;
-			if (Input.GetButton("Jump") && cc.isGrounded) {
-				ccMotion.y = jumpSpeed;
-				Debug.Log("Jump at t=" + Time.time);
-			}
-		} else {
-			float airSpeed = moveSpeed * airSpeedMult;
-			ccMotion += transform.rotation *
-				new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical")) * airSpeed;
-		}
+		//Move the character controller
+		ccMotion = new Vector3(Input.GetAxis("Horizontal"), ccMotion.y / moveSpeed, Input.GetAxis("Vertical")) * moveSpeed;
+		ccMotion = transform.rotation * ccMotion;
+
+		if (Input.GetButton("Jump") && cc.isGrounded)
+			ccMotion.y = jumpSpeed;
+		
 		ccMotion += Physics.gravity * Time.deltaTime;
 		cc.Move(ccMotion * Time.deltaTime);
 
+		//Rotate the controller and/or camera
 		camRot += -Input.GetAxis("Mouse Y") * camSpeed;
 		camRot = Mathf.Clamp(camRot, -90, 90);
+
 		cam.transform.localRotation = Quaternion.Euler(camRot, 0f, 0f);
 		transform.Rotate(transform.up, Input.GetAxis("Mouse X") * camSpeed);
 	}
 
 	
+	//This is so you can push rigidbodies.
 	void OnControllerColliderHit (ControllerColliderHit hit) {
+		if (!canPush)
+			return;
+
 		Rigidbody body = hit.collider.attachedRigidbody;
 		if (body == null || body.isKinematic)
 			return;
@@ -52,6 +54,6 @@ public class PlayerMovement : MonoBehaviour {
 			return;
 
 		Vector3 pushDir = new Vector3(hit.moveDirection.x, 0, hit.moveDirection.z);
-		body.velocity = pushDir * pushPower;
+		body.AddForce(pushDir * pushPower);
 	}
 }
