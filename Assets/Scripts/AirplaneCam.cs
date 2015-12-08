@@ -16,12 +16,6 @@ public class AirplaneCam : MonoBehaviour {
 		//Since FOV is graphical, it is manipulated every rendered frame.
 		cam.fieldOfView = fovKick.Evaluate(follow.velocity.magnitude);
 
-
-		if (Input.GetKeyUp(KeyCode.R))
-			Application.LoadLevel(Application.loadedLevel);
-
-
-
 	}
 
 	void FixedUpdate () {

@@ -10,17 +10,18 @@ public enum playerMode {
 public class PlayerState : MonoBehaviour {
 	public playerMode state = playerMode.walking;
 	playerMode prevState = playerMode.walking;
-	public GameObject walkingStateController;
-	public AirplaneController airplaneStateController;
+	public GameObject walkingController;
+	public AirplaneController airplaneController;
 	public GameObject airplaneCam;
 	public Docking dockingController;
 	public float lastChangeTime = 0f;
 
 
 	void Start () {
+		Cursor.visible = false;
 		prevState = state;
-		walkingStateController.SetActive(false);
-		airplaneStateController.enabled = false;
+		walkingController.SetActive(false);
+		airplaneController.enabled = false;
 		airplaneCam.SetActive(false);
 		dockingController.docked = true;
 		ChangeState(prevState, state);
@@ -31,6 +32,9 @@ public class PlayerState : MonoBehaviour {
 			ChangeState(prevState, state);
 
 		prevState = state;
+
+		if (Input.GetKeyUp(KeyCode.R))
+			Application.LoadLevel(Application.loadedLevel);
 	}
 
 	public void ChangeState (playerMode from, playerMode to) {
@@ -40,10 +44,10 @@ public class PlayerState : MonoBehaviour {
 		switch (from) {
 			default:
 			case playerMode.walking:
-				walkingStateController.SetActive(false);
+				walkingController.SetActive(false);
 				break;
 			case playerMode.gliding:
-				airplaneStateController.enabled = false;
+				airplaneController.ShutDown();
 				airplaneCam.SetActive(false);
 				dockingController.docked = true;
 				break;
@@ -54,10 +58,10 @@ public class PlayerState : MonoBehaviour {
 		switch (to) {
 			default:
 			case playerMode.walking:
-				walkingStateController.SetActive(true);
+				walkingController.SetActive(true);
 				break;
 			case playerMode.gliding:
-				airplaneStateController.enabled = true;
+				airplaneController.enabled = true;
 				airplaneCam.SetActive(true);
 				dockingController.docked = false;
 				airplaneCam.GetComponent<AirplaneCam>().ResetPosition();
