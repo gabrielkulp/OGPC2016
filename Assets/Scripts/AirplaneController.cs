@@ -70,7 +70,7 @@ public class AirplaneController : MonoBehaviour {
 		if (other.gameObject.name != "Player")
 			return;
 
-		GameObject.Find("Player Controller").GetComponent<PlayerState>().state = playerMode.gliding;
+		GameObject.Find("Player Controller").GetComponent<PlayerState>().state = playerMode.airplane;
 	}
 
 	void OnGUI () {

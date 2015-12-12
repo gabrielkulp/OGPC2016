@@ -6,6 +6,7 @@ public class Docking : MonoBehaviour {
 	GameObject airplane;
 	public GameObject playerDock;
 	public GameObject player;
+	public Vector3 undockForce;
 	Collider trigger;
 	public bool docked = true;
 	bool lastDocked = true;
@@ -15,13 +16,14 @@ public class Docking : MonoBehaviour {
 		playerController = GameObject.Find("Player Controller");
 		airplane = GameObject.Find("Airplane");
 		trigger = GetComponent<Collider>();
-		docked = true;
 	}
 	
 	void FixedUpdate () {
 		if (lastDocked != docked) {
 			airplane.GetComponent<Rigidbody>().isKinematic = docked;
-		}
+			if (!docked)
+				airplane.GetComponent<Rigidbody>().AddRelativeForce(undockForce);
+        }
 		trigger.enabled = !docked;
 
 		//Keeps the airplane on the deck

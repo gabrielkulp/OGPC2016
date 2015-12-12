@@ -3,8 +3,8 @@ using System.Collections;
 
 public enum playerMode {
 	walking,    //FPS-like, one gameObject
-	gliding,    //Airplane flight, one gameObject and one script
-	flying      //Blimp flight, one gameObject and one script
+	airplane,    //Airplane flight, one gameObject and one script
+	ship      //Blimp flight, one gameObject and one script
 }
 
 public class PlayerState : MonoBehaviour {
@@ -46,12 +46,12 @@ public class PlayerState : MonoBehaviour {
 			case playerMode.walking:
 				walkingController.SetActive(false);
 				break;
-			case playerMode.gliding:
+			case playerMode.airplane:
 				airplaneController.ShutDown();
 				airplaneCam.SetActive(false);
 				dockingController.docked = true;
 				break;
-			case playerMode.flying:
+			case playerMode.ship:
 				Debug.Log("U WOT M8");
 				break;
 		}
@@ -60,13 +60,13 @@ public class PlayerState : MonoBehaviour {
 			case playerMode.walking:
 				walkingController.SetActive(true);
 				break;
-			case playerMode.gliding:
+			case playerMode.airplane:
 				airplaneController.enabled = true;
 				airplaneCam.SetActive(true);
 				dockingController.docked = false;
 				airplaneCam.GetComponent<AirplaneCam>().ResetPosition();
 				break;
-			case playerMode.flying:
+			case playerMode.ship:
 				Debug.Log("U WOT M8");
 				break;
 		}
