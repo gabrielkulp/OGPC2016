@@ -8,67 +8,52 @@ public enum playerMode {
 }
 
 public class PlayerState : MonoBehaviour {
-	public playerMode state = playerMode.walking;
-	playerMode prevState = playerMode.walking;
+  	public bool flying = false;
+	public bool prevState = false;
+	public bool changed = false;
 	public GameObject walkingController;
 	public AirplaneController airplaneController;
 	public GameObject airplaneCam;
-	public Docking dockingController;
+	public DockingController dockingController;
 	public float lastChangeTime = 0f;
 
 
 	void Start () {
 		Cursor.visible = false;
-		prevState = state;
+		prevState = flying;
 		walkingController.SetActive(false);
 		airplaneController.enabled = false;
 		airplaneCam.SetActive(false);
-		dockingController.docked = true;
-		ChangeState(prevState, state);
+		SetFlyingState(flying);
 	}
 	
 	void Update () {
-		if (prevState != state)
-			ChangeState(prevState, state);
+		changed = (prevState != flying);
+		if (changed) {
+			SetFlyingState(flying);
+		}
 
-		prevState = state;
+		prevState = flying;
 
-		if (Input.GetKeyUp(KeyCode.R))
+		if (Input.GetKeyUp(KeyCode.R) || Input.GetKeyUp(KeyCode.JoystickButton6))
 			Application.LoadLevel(Application.loadedLevel);
 	}
 
-	public void ChangeState (playerMode from, playerMode to) {
+	public void SetFlyingState (bool to) {
 		lastChangeTime = Time.time;
-		state = to;
-		prevState = to;
-		switch (from) {
-			default:
-			case playerMode.walking:
-				walkingController.SetActive(false);
-				break;
-			case playerMode.airplane:
-				airplaneController.ShutDown();
-				airplaneCam.SetActive(false);
-				dockingController.docked = true;
-				break;
-			case playerMode.ship:
-				Debug.Log("U WOT M8");
-				break;
-		}
-		switch (to) {
-			default:
-			case playerMode.walking:
-				walkingController.SetActive(true);
-				break;
-			case playerMode.airplane:
-				airplaneController.enabled = true;
-				airplaneCam.SetActive(true);
-				dockingController.docked = false;
-				airplaneCam.GetComponent<AirplaneCam>().ResetPosition();
-				break;
-			case playerMode.ship:
-				Debug.Log("U WOT M8");
-				break;
+		flying = to;
+		changed = true;
+		if (flying) {
+			walkingController.SetActive(false);
+
+			airplaneController.enabled = true;
+			airplaneCam.SetActive(true);
+			airplaneCam.GetComponent<AirplaneCam>().ResetPosition();
+		} else {
+			walkingController.SetActive(true);
+
+			airplaneController.ShutDown();
+			airplaneCam.SetActive(false);
 		}
 	}
 }

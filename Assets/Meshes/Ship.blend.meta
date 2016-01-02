@@ -1,15 +1,120 @@
 fileFormatVersion: 2
-guid: 56ea45fa2ca6b97408d5f5d485889fd9
-timeCreated: 1449874416
+guid: dd22fad3222de0a47bc1832ab1592530
+timeCreated: 1451776346
 licenseType: Free
 ModelImporter:
   serializedVersion: 18
   fileIDToRecycleName:
-    100000: //RootNode
-    400000: //RootNode
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: Ship
+    100000: Cylinder
+    100002: Cylinder_001
+    100004: Cylinder_002
+    100006: Cylinder_003
+    100008: Mast
+    100010: Post_Back
+    100012: Post_Front
+    100014: Post_L
+    100016: Post_R
+    100018: Railing_Back
+    100020: Railing_Front
+    100022: Railing_Mid
+    100024: Sail_Higher
+    100026: Sail_Higher_001
+    100028: Sail_Sides
+    100030: //RootNode
+    100032: Ship
+    100034: SideMast
+    100036: Stairs
+    400000: Cylinder
+    400002: Cylinder_001
+    400004: Cylinder_002
+    400006: Cylinder_003
+    400008: Mast
+    400010: Post_Back
+    400012: Post_Front
+    400014: Post_L
+    400016: Post_R
+    400018: Railing_Back
+    400020: Railing_Front
+    400022: Railing_Mid
+    400024: Sail_Higher
+    400026: Sail_Higher_001
+    400028: Sail_Sides
+    400030: //RootNode
+    400032: Ship
+    400034: SideMast
+    400036: Stairs
+    2300000: Cylinder
+    2300002: Cylinder_001
+    2300004: Cylinder_002
+    2300006: Cylinder_003
+    2300008: Mast
+    2300010: Post_Back
+    2300012: Post_Front
+    2300014: Post_L
+    2300016: Post_R
+    2300018: Railing_Back
+    2300020: Railing_Front
+    2300022: Railing_Mid
+    2300024: Sail_Higher
+    2300026: Sail_Higher_001
+    2300028: Sail_Sides
+    2300030: Ship
+    2300032: SideMast
+    2300034: Stairs
+    3300000: Cylinder
+    3300002: Cylinder_001
+    3300004: Cylinder_002
+    3300006: Cylinder_003
+    3300008: Mast
+    3300010: Post_Back
+    3300012: Post_Front
+    3300014: Post_L
+    3300016: Post_R
+    3300018: Railing_Back
+    3300020: Railing_Front
+    3300022: Railing_Mid
+    3300024: Sail_Higher
+    3300026: Sail_Higher_001
+    3300028: Sail_Sides
+    3300030: Ship
+    3300032: SideMast
+    3300034: Stairs
+    4300000: Sail_Higher_001
+    4300002: Cylinder_003
+    4300004: Cylinder_002
+    4300006: Railing_Front
+    4300008: Cylinder_001
+    4300010: Cylinder
+    4300012: Sail_Sides
+    4300014: Sail_Higher
+    4300016: Railing_Mid
+    4300018: Post_Front
+    4300020: Stairs
+    4300022: Railing_Back
+    4300024: Post_Back
+    4300026: Post_L
+    4300028: Post_R
+    4300030: SideMast
+    4300032: Mast
+    4300034: Ship
+    6400000: Cylinder
+    6400002: Cylinder_001
+    6400004: Cylinder_002
+    6400006: Cylinder_003
+    6400008: Mast
+    6400010: Post_Back
+    6400012: Post_Front
+    6400014: Post_L
+    6400016: Post_R
+    6400018: Railing_Back
+    6400020: Railing_Front
+    6400022: Railing_Mid
+    6400024: Sail_Higher
+    6400026: Sail_Higher_001
+    6400028: Sail_Sides
+    6400030: Ship
+    6400032: SideMast
+    6400034: Stairs
     7400000: Default Take
     9500000: //RootNode
   materials:
@@ -35,9 +140,9 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 10
-    meshCompression: 0
-    addColliders: 0
+    globalScale: 1
+    meshCompression: 3
+    addColliders: 1
     importBlendShapes: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
@@ -51,7 +156,7 @@ ModelImporter:
     secondaryUVPackMargin: 4
     useFileScale: 1
   tangentSpace:
-    normalSmoothAngle: 45
+    normalSmoothAngle: 60
     splitTangentsAcrossUV: 1
     normalImportMode: 1
     tangentImportMode: 1

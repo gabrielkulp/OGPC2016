@@ -5,6 +5,8 @@ public class PlayerMovement : MonoBehaviour {
 	public float moveSpeed;
 	public float airSpeedMult;	//Fractional multiplier of moveSpeed for when you're in the air.
 	public float jumpSpeed;
+	public float gravMultiplier = 2f;
+	public float inheritVelocityHeight = 10f;	//How high you have to be to not inherit velocity
 	CharacterController cc;
 	Vector3 ccMotion = Vector3.zero;
 
@@ -21,16 +23,62 @@ public class PlayerMovement : MonoBehaviour {
 		camRot = 0f;
 	}
 
-	void Update () {
+	void FixedUpdate () {
 		//Move the character controller
-		ccMotion = new Vector3(Input.GetAxis("Horizontal"), ccMotion.y / moveSpeed, Input.GetAxis("Vertical")) * moveSpeed;
-		ccMotion = transform.rotation * ccMotion;
+		ccMotion = new Vector3(0, ccMotion.y,0);
+		ccMotion += Vector3.ClampMagnitude(
+			new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")), 1f) * moveSpeed;
+        ccMotion = transform.rotation * ccMotion;
 
-		if (Input.GetButton("Jump") && cc.isGrounded)
-			ccMotion.y = jumpSpeed;
-		
-		ccMotion += Physics.gravity * Time.deltaTime;
-		cc.Move(ccMotion * Time.deltaTime);
+
+		//Check for things under you to inherit velocity from
+		RaycastHit hit;
+		if (Physics.Raycast(transform.position, Vector3.down, out hit, inheritVelocityHeight)) {
+			if (hit.rigidbody) {
+				ccMotion += hit.rigidbody.velocity;
+				transform.RotateAround(
+					hit.rigidbody.worldCenterOfMass,
+					hit.transform.up,
+					hit.rigidbody.angularVelocity.y * 57f * Time.fixedDeltaTime);
+				//TODO: Fix magic number
+				Debug.Log("Rigidbody " + Time.time);
+			} else {
+
+				//Get top level gameObject
+				GameObject otherGO = hit.collider.gameObject;
+				while (otherGO.transform.parent != null) {
+					otherGO = otherGO.transform.parent.gameObject;
+				}
+				if (otherGO.GetComponent<AirshipController>() != null) {
+					AirshipController airship = otherGO.GetComponent<AirshipController>();
+					if (cc.isGrounded)
+						ccMotion.y = airship.velocity.y * Time.fixedDeltaTime;
+                    ccMotion += Vector3.Scale(airship.velocity, new Vector3(1,0,1));
+					transform.RotateAround(otherGO.transform.position, otherGO.transform.up,
+						airship.angularVelocity.y * Time.fixedDeltaTime);
+					//Debug.Log("Airship " + Time.time);
+
+				} else {
+					//Debug.Log("No RB or Airship " + Time.time);
+				}
+            }
+		} else {
+			//Debug.Log("No hit " + Time.time);
+		}
+
+		//Deal with jumping and gravity
+		if (cc.isGrounded) {
+			ccMotion.y = 0f;
+			if (Input.GetButton("Jump"))
+				ccMotion.y = jumpSpeed;
+		} else {
+			ccMotion += Physics.gravity * gravMultiplier * Time.fixedDeltaTime;
+		}
+
+		cc.Move(ccMotion * Time.fixedDeltaTime);
+
+		//Ensures it stays upright
+		transform.localEulerAngles = Vector3.Scale(transform.localEulerAngles, Vector3.up);
 
 		//Rotate the controller and/or camera
 		camRot += -Input.GetAxis("Mouse Y") * camSpeed;

@@ -16,19 +16,25 @@ public class AirplaneController : MonoBehaviour {
 	public float minSqrVel = 200f;
 	Rigidbody rb;
 
-	public Transform rightAileron;
-	public Transform leftAileron;
+	public Transform rightElevon;
+	public Transform leftElevon;
 	public float maxAileronDeflection;
 	public float aileronDeflectionOffset;
-	Vector2 currentAileronDeflection;	//x is right aileron
+	Vector2 currentAileronDeflection;   //x is right aileron
+	public GameObject trails;
+
+	public AirshipController airship;
+	public float maxLaunchSpeed = 5f;
 
 	void Start () {
 		rb = GetComponent<Rigidbody>();
+		trails.SetActive(false);
 	}
 
 	void FixedUpdate () {
 		//Old method:
 		//rb.velocity = transform.forward * speed;
+		trails.SetActive(true);
 
 		//engine
 		fuel -= Time.fixedDeltaTime/(fuelTime * 60);
@@ -54,23 +60,32 @@ public class AirplaneController : MonoBehaviour {
 			Input.GetAxis("Horizontal") * rollTorque * -1));
 		currentAileronDeflection.x = Mathf.Clamp(Input.GetAxis("Horizontal") + Input.GetAxis("Vertical"), -1f, 1f);
 		currentAileronDeflection.y = Mathf.Clamp(-Input.GetAxis("Horizontal") + Input.GetAxis("Vertical"), -1f, 1f);
-		rightAileron.localRotation = Quaternion.Slerp(rightAileron.localRotation, Quaternion.Euler (
+
+		//Move elevons
+		rightElevon.localRotation = Quaternion.Slerp(rightElevon.localRotation, Quaternion.Euler (
 			Vector3.right * ((currentAileronDeflection.x * maxAileronDeflection) + aileronDeflectionOffset)), .1f);
-		leftAileron.localRotation = Quaternion.Slerp(leftAileron.localRotation, Quaternion.Euler(
+		leftElevon.localRotation = Quaternion.Slerp(leftElevon.localRotation, Quaternion.Euler(
 			Vector3.right * ((currentAileronDeflection.y * maxAileronDeflection) + aileronDeflectionOffset)), .1f);
+		
 	}
 
 	public void ShutDown () {
-		rightAileron.localEulerAngles = Vector3.right * aileronDeflectionOffset;
-		leftAileron.localEulerAngles = Vector3.right * aileronDeflectionOffset;
+		rightElevon.localEulerAngles = Vector3.right * aileronDeflectionOffset;
+		leftElevon.localEulerAngles = Vector3.right * aileronDeflectionOffset;
+		trails.SetActive(false);
 		this.enabled = false;
 	}
 
-	void OnTriggerEnter (Collider other) {
-		if (other.gameObject.name != "Player")
+	void OnTriggerStay (Collider other) {
+		if (other.tag != "Player")
 			return;
 
-		GameObject.Find("Player Controller").GetComponent<PlayerState>().state = playerMode.airplane;
+		if (airship.velocity.magnitude >= maxLaunchSpeed)
+			return;
+
+		if (Input.GetButtonUp("Use")) {
+			GameObject.Find("Player Controller").GetComponent<PlayerState>().SetFlyingState(true);
+		}
 	}
 
 	void OnGUI () {
