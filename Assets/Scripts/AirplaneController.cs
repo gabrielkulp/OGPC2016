@@ -29,7 +29,9 @@ public class AirplaneController : MonoBehaviour {
 	void Start () {
 		rb = GetComponent<Rigidbody>();
 		trails.SetActive(false);
-	}
+		if (rightElevon == null || leftElevon == null)
+			Debug.LogWarning("Elevons not set up on " + gameObject.name);
+    }
 
 	void FixedUpdate () {
 		//Old method:
@@ -62,16 +64,19 @@ public class AirplaneController : MonoBehaviour {
 		currentAileronDeflection.y = Mathf.Clamp(-Input.GetAxis("Horizontal") + Input.GetAxis("Vertical"), -1f, 1f);
 
 		//Move elevons
-		rightElevon.localRotation = Quaternion.Slerp(rightElevon.localRotation, Quaternion.Euler (
-			Vector3.right * ((currentAileronDeflection.x * maxAileronDeflection) + aileronDeflectionOffset)), .1f);
-		leftElevon.localRotation = Quaternion.Slerp(leftElevon.localRotation, Quaternion.Euler(
-			Vector3.right * ((currentAileronDeflection.y * maxAileronDeflection) + aileronDeflectionOffset)), .1f);
-		
+		if (rightElevon != null && leftElevon != null) {
+			rightElevon.localRotation = Quaternion.Slerp(rightElevon.localRotation, Quaternion.Euler(
+				Vector3.right * ((currentAileronDeflection.x * maxAileronDeflection) + aileronDeflectionOffset)), .1f);
+			leftElevon.localRotation = Quaternion.Slerp(leftElevon.localRotation, Quaternion.Euler(
+				Vector3.right * ((currentAileronDeflection.y * maxAileronDeflection) + aileronDeflectionOffset)), .1f);
+		}
 	}
 
 	public void ShutDown () {
-		rightElevon.localEulerAngles = Vector3.right * aileronDeflectionOffset;
-		leftElevon.localEulerAngles = Vector3.right * aileronDeflectionOffset;
+		if (rightElevon != null && leftElevon != null) {
+			rightElevon.localEulerAngles = Vector3.right * aileronDeflectionOffset;
+			leftElevon.localEulerAngles = Vector3.right * aileronDeflectionOffset;
+		}
 		trails.SetActive(false);
 		this.enabled = false;
 	}

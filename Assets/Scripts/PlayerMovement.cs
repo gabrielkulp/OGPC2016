@@ -5,6 +5,15 @@ public class PlayerMovement : MonoBehaviour {
 	public float moveSpeed;
 	public float airSpeedMult;	//Fractional multiplier of moveSpeed for when you're in the air.
 	public float jumpSpeed;
+	public AnimationCurve viewBobX;
+	public AnimationCurve viewBobY;
+	public Vector2 viewBobMagnitude = Vector2.one * 0.1f;
+	public float viewBobLoopLength = 0.5f;
+	public float viewBobTime = 0f;
+	public float viewBobResetLerpCoeff = 0.2f;
+	Vector3 viewBobOrigin;
+	Vector3 viewDelta = Vector3.zero;
+
 	public float gravMultiplier = 2f;
 	public float inheritVelocityHeight = 10f;	//How high you have to be to not inherit velocity
 	CharacterController cc;
@@ -21,6 +30,9 @@ public class PlayerMovement : MonoBehaviour {
 		cc = GetComponent<CharacterController>();
 		ccMotion = Vector3.zero;
 		camRot = 0f;
+		viewBobTime = 0f;
+		viewBobOrigin = cam.transform.localPosition;
+		viewDelta = Vector3.zero;
 	}
 
 	void FixedUpdate () {
@@ -30,6 +42,21 @@ public class PlayerMovement : MonoBehaviour {
 			new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")), 1f) * moveSpeed;
         ccMotion = transform.rotation * ccMotion;
 
+		if (cc.isGrounded) {
+			Vector3 flatMotion = Vector3.Scale(ccMotion, new Vector3(1f, 0f, 1f) / moveSpeed);
+			Debug.Log(flatMotion.magnitude);
+            if (flatMotion.magnitude > 0f) {
+				viewBobTime += (Time.fixedDeltaTime * flatMotion.magnitude) / viewBobLoopLength;
+				viewDelta.x = viewBobX.Evaluate(viewBobTime);
+				viewDelta.y = viewBobY.Evaluate(viewBobTime);
+				viewDelta = Vector3.Scale(viewDelta, viewBobMagnitude);
+			} else {
+				viewDelta = Vector3.Lerp(viewDelta, Vector3.zero, viewBobResetLerpCoeff);
+				viewBobTime = 0f;
+			}
+			
+			cam.transform.localPosition = viewBobOrigin + viewDelta;
+		}
 
 		//Check for things under you to inherit velocity from
 		RaycastHit hit;
@@ -69,6 +96,7 @@ public class PlayerMovement : MonoBehaviour {
 		//Deal with jumping and gravity
 		if (cc.isGrounded) {
 			ccMotion.y = 0f;
+
 			if (Input.GetButton("Jump"))
 				ccMotion.y = jumpSpeed;
 		} else {

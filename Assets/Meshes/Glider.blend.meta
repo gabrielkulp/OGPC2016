@@ -9,19 +9,34 @@ ModelImporter:
     100002: Glider_Bullshit
     100004: Glider_Bullshit_001
     100006: Glider_Bullshit_002
+    100008: Feathers
+    100010: Plane
+    100012: Wing
     400000: //RootNode
     400002: Glider_Bullshit
     400004: Glider_Bullshit_001
     400006: Glider_Bullshit_002
+    400008: Feathers
+    400010: Plane
+    400012: Wing
     2300000: Glider_Bullshit
     2300002: Glider_Bullshit_001
     2300004: Glider_Bullshit_002
+    2300006: Feathers
+    2300008: Plane
+    2300010: Wing
     3300000: Glider_Bullshit
     3300002: Glider_Bullshit_001
     3300004: Glider_Bullshit_002
+    3300006: Feathers
+    3300008: Plane
+    3300010: Wing
     4300000: Glider_Bullshit_002
     4300002: Glider_Bullshit_001
     4300004: Glider_Bullshit
+    4300006: Plane
+    4300008: Feathers
+    4300010: Wing
     7400000: Default Take
     9500000: //RootNode
   materials:
@@ -63,9 +78,9 @@ ModelImporter:
     secondaryUVPackMargin: 4
     useFileScale: 1
   tangentSpace:
-    normalSmoothAngle: 70
+    normalSmoothAngle: 30
     splitTangentsAcrossUV: 1
-    normalImportMode: 1
+    normalImportMode: 0
     tangentImportMode: 1
   importAnimation: 0
   copyAvatar: 0

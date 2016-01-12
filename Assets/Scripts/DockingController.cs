@@ -17,7 +17,7 @@ public class DockingController : MonoBehaviour {
 		trigger = GetComponent<Collider>();
 	}
 	
-	void FixedUpdate () {
+	void Update () {
 		if (playerState.changed) {
 			airplane.GetComponent<Rigidbody>().isKinematic = !playerState.flying;
 			if (playerState.flying)

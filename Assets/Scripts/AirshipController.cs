@@ -25,6 +25,7 @@ public class AirshipController : MonoBehaviour {
 		pitch += steer.x * maxPitchSpeed * Time.fixedDeltaTime;
 		pitch = Mathf.Clamp(pitch, -90f, 90f);
 
+		//throttle = Mathf.Abs(Mathf.Sin(Time.time));
 
 		velocity = Quaternion.Euler(-pitch, 0f, 0f) * transform.forward * throttle * maxSpeed;
 		angularVelocity = transform.up * steer.y * maxSteer;
