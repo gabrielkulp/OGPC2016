@@ -2,9 +2,9 @@
 using System.Collections;
 
 public enum playerMode {
-	walking,    //FPS-like, one gameObject
-	airplane,    //Airplane flight, one gameObject and one script
-	ship      //Blimp flight, one gameObject and one script
+	walking,	//FPS-like, one gameObject
+	airplane,	//Airplane flight, one gameObject and one script
+	ship		//Airship flight, one gameObject and one script
 }
 
 public class PlayerState : MonoBehaviour {
@@ -19,7 +19,6 @@ public class PlayerState : MonoBehaviour {
 
 
 	void Start () {
-		Cursor.visible = false;
 		prevState = flying;
 		walkingController.SetActive(false);
 		airplaneController.enabled = false;

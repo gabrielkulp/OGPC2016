@@ -3,13 +3,13 @@ using System.Collections;
 
 public class AirshipController : MonoBehaviour {
 	public Transform[] engines;
-	public float throttle = 0.3f;			//percentage, 0 to 1
-	public Vector2 steer = Vector3.zero;	//percentages, -1 to 1
-	public float maxSpeed = 20f;			//meters/second
-	public float maxSteer = 15f;            //degrees/second
-	public float maxPitchSpeed = 10f;		//degrees/second
-
-	public float pitch = 0f;
+	public float yaw = 0f;			//percentage, -1 to 1
+	public float throttle = 0.3f;   //percentage, -1 to 1
+	public float climb = 0f;		//percentage, -1 to 1
+	public float maxSpeed = 20f;	//meters/second
+	public float maxClimb = 5f;		//meters/second
+	public float maxYaw = 10f;      //degrees/second
+	public Rigidbody RB;
 	
 	[HideInInspector]
 	public Vector3 velocity = Vector3.zero;
@@ -22,14 +22,13 @@ public class AirshipController : MonoBehaviour {
 	}
 	
 	void FixedUpdate () {
-		pitch += steer.x * maxPitchSpeed * Time.fixedDeltaTime;
-		pitch = Mathf.Clamp(pitch, -90f, 90f);
-
-		//throttle = Mathf.Abs(Mathf.Sin(Time.time));
-
-		velocity = Quaternion.Euler(-pitch, 0f, 0f) * transform.forward * throttle * maxSpeed;
-		angularVelocity = transform.up * steer.y * maxSteer;
+		velocity = transform.forward * throttle * maxSpeed;
+		velocity += transform.up * climb * maxClimb;
+		angularVelocity = transform.up * yaw * maxYaw;
 		transform.Translate(velocity * Time.fixedDeltaTime, Space.World);
 		transform.Rotate(angularVelocity * Time.fixedDeltaTime);
+		//RB.velocity = velocity;
+		//RB.angularVelocity = angularVelocity;
+
 	}
 }
