@@ -12,7 +12,7 @@ public class TextFade : MonoBehaviour {
 	public bool near = false;
 	PlayerState playerState;
 	public Camera cam;
-	public AirshipController airship;
+	public Rigidbody airship;
 	public AirplaneController airplane;
 
 	void Start () {

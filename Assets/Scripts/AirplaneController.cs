@@ -2,15 +2,18 @@
 using System.Collections;
 
 public class AirplaneController : MonoBehaviour {
+	public float throttle = 1f;
 	public float fuel = 1f;
-	public float fuelTime = 5f;	//Minutes of fuel
+	public float fuelPerN = 0.001f;	//Fuel lost per N/s of thrust
 	public Vector3 stabilizingDrag = new Vector3(0.5f, 1f, 0f);
 	public Vector3 drag = new Vector3(2f, 8f, 0.05f);
 	public float trim = 0.1f;
 	public float pitchTorque = 1f;
 	public float rollTorque = 2f;
 	public float yawTorque = 3f;
-	public float thrust = 500f;
+	public float boostTorqueMult = 0.5f;
+	public float maxThrust = 500f;
+	public float boostThrustMult = 2f;
 	public float yawPortion = 0.3f;
 	public float maxSqrVel = 800f;
 	public float minSqrVel = 200f;
@@ -22,8 +25,11 @@ public class AirplaneController : MonoBehaviour {
 	public float aileronDeflectionOffset;
 	Vector2 currentAileronDeflection;   //x is right aileron
 	public GameObject trails;
+	public ParticleSystem boostTrail;
+	public float boostTrailEmitMult;
+	float boostTrailBaseRate;
 
-	public AirshipController airship;
+	public Rigidbody airship;
 	public float maxLaunchSpeed = 5f;
 
 	void Start () {
@@ -31,6 +37,9 @@ public class AirplaneController : MonoBehaviour {
 		trails.SetActive(false);
 		if (rightElevon == null || leftElevon == null)
 			Debug.LogWarning("Elevons not set up on " + gameObject.name);
+		boostTrailBaseRate = boostTrail.startLifetime;
+		//boostTrail.startLifetime = 0f;
+		
     }
 
 	void FixedUpdate () {
@@ -39,10 +48,14 @@ public class AirplaneController : MonoBehaviour {
 		trails.SetActive(true);
 
 		//engine
-		fuel -= Time.fixedDeltaTime/(fuelTime * 60);
+		float thrust = maxThrust * throttle * (Input.GetButton("Sprint") ? boostThrustMult : 1f);
+        fuel -= fuelPerN * thrust * Time.deltaTime;
 		fuel = Mathf.Clamp01(fuel);
+		boostTrail.startLifetime = boostTrailBaseRate * throttle * (Input.GetButton("Sprint") ? boostThrustMult : 1f);
 		if (fuel > 0f)
 			rb.AddRelativeForce(0f, 0f, thrust);
+		else
+			boostTrail.emissionRate = 0f;
 
 
 		//Wings and drag
@@ -56,10 +69,14 @@ public class AirplaneController : MonoBehaviour {
 		rb.AddRelativeTorque(stabilizationForces.y, stabilizationForces.z, -stabilizationForces.x);
 
 		//Control
-		rb.AddRelativeTorque(Mathf.Clamp(sqrVel, minSqrVel, maxSqrVel) * new Vector3(
+		Vector3 torque = new Vector3(
 			(Input.GetAxis("Vertical") - trim) * pitchTorque,
 			Input.GetAxis("Horizontal") * yawPortion * yawTorque,
-			Input.GetAxis("Horizontal") * rollTorque * -1));
+			Input.GetAxis("Horizontal") * rollTorque * -1);
+		if (Input.GetButton("Sprint"))
+			torque *= boostTorqueMult;
+
+		rb.AddRelativeTorque(Mathf.Clamp(sqrVel, minSqrVel, maxSqrVel) * torque);
 		currentAileronDeflection.x = Mathf.Clamp(Input.GetAxis("Horizontal") + Input.GetAxis("Vertical"), -1f, 1f);
 		currentAileronDeflection.y = Mathf.Clamp(-Input.GetAxis("Horizontal") + Input.GetAxis("Vertical"), -1f, 1f);
 
@@ -79,6 +96,8 @@ public class AirplaneController : MonoBehaviour {
 		}
 		trails.SetActive(false);
 		this.enabled = false;
+		//boostTrail.emissionRate = 0f;
+
 	}
 
 	void OnTriggerStay (Collider other) {

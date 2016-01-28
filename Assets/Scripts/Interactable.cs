@@ -13,6 +13,10 @@ public class Interactable : MonoBehaviour {
 	Quaternion startRot = Quaternion.identity;
 //	Quaternion lastRot = Quaternion.identity;
 	public float position = 0f;
+	public bool snap = false;
+	public float snapIncrement = 35f;
+	HingeJoint joint;
+	JointSpring spring;
 	
 	public OutputMode outputRange = OutputMode.ZeroToOne;
 	public float output = 0f;
@@ -20,7 +24,11 @@ public class Interactable : MonoBehaviour {
 	void Start () {
 		startPos = transform.localPosition;
 		startRot = transform.localRotation;
-//		lastRot = startRot;
+		//		lastRot = startRot;
+		if (motion == InteractionMode.Rotational) {
+			joint = GetComponent<HingeJoint>();
+			spring = joint.spring;
+		}
 	}
 
 	void Update () {
@@ -57,6 +65,15 @@ public class Interactable : MonoBehaviour {
 			}
 
 			position = Mathf.DeltaAngle(angleA, angleB);
+			if (snap) {
+				if (position - joint.spring.targetPosition > snapIncrement / 2f) {
+					spring.targetPosition += snapIncrement;
+					joint.spring = spring;
+				} else if (position - joint.spring.targetPosition < -snapIncrement / 2f) {
+					spring.targetPosition -= snapIncrement;
+					joint.spring = spring;
+				}
+			}
 		}
 		
 		if (outputRange == OutputMode.ZeroToOne)
