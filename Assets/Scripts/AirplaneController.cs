@@ -39,7 +39,7 @@ public class AirplaneController : MonoBehaviour {
 	void Start () {
 		rb = GetComponent<Rigidbody>();
 		boostTrailBaseRate = boostTrail.startLifetime;
-		dockPos = transform.localPosition;
+		dockPos = airship.transform.InverseTransformPoint(transform.position);
 		ShutDown();
     }
 
@@ -86,7 +86,7 @@ public class AirplaneController : MonoBehaviour {
 		trails.SetActive(false);
 		boostTrail.enableEmission = false;
 		if (player.onShip) {
-			transform.position = dockPos;
+			transform.position = airship.transform.TransformPoint(dockPos);
 			transform.rotation = airship.transform.rotation;
 			FixedJoint joint = gameObject.AddComponent<FixedJoint>();
 			joint.connectedBody = airship;
