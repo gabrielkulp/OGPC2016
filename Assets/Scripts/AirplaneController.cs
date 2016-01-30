@@ -17,13 +17,15 @@ public class AirplaneController : MonoBehaviour {
 	public float yawPortion = 0.3f;
 	public float maxSqrVel = 800f;
 	public float minSqrVel = 200f;
-	Rigidbody rb;
 
-	public Transform rightElevon;
-	public Transform leftElevon;
-	public float maxAileronDeflection;
-	public float aileronDeflectionOffset;
-	Vector2 currentAileronDeflection;   //x is right aileron
+	public Vector3 launchForce = Vector3.zero;
+	public float launchTime = 3f;   //Seconds to get away before checking landing collisions again
+	float lastLaunchTime;
+
+	Rigidbody rb;
+	Vector3 dockPos = Vector3.zero;
+
+
 	public GameObject trails;
 	public ParticleSystem boostTrail;
 	public float boostTrailEmitMult;
@@ -31,27 +33,26 @@ public class AirplaneController : MonoBehaviour {
 
 	public Rigidbody airship;
 	public float maxLaunchSpeed = 5f;
+	public GameObject trailCam;
+	public Player player;
 
 	void Start () {
 		rb = GetComponent<Rigidbody>();
-		trails.SetActive(false);
-		if (rightElevon == null || leftElevon == null)
-			Debug.LogWarning("Elevons not set up on " + gameObject.name);
 		boostTrailBaseRate = boostTrail.startLifetime;
-		//boostTrail.startLifetime = 0f;
-		
+		dockPos = transform.localPosition;
+		ShutDown();
     }
 
 	void FixedUpdate () {
 		//Old method:
 		//rb.velocity = transform.forward * speed;
-		trails.SetActive(true);
 
 		//engine
 		float thrust = maxThrust * throttle * (Input.GetButton("Sprint") ? boostThrustMult : 1f);
         fuel -= fuelPerN * thrust * Time.deltaTime;
 		fuel = Mathf.Clamp01(fuel);
-		boostTrail.startLifetime = boostTrailBaseRate * throttle * (Input.GetButton("Sprint") ? boostThrustMult : 1f);
+		boostTrail.startLifetime = boostTrailBaseRate * throttle * (Input.GetButton("Sprint") ? boostTrailEmitMult : 1f);
+
 		if (fuel > 0f)
 			rb.AddRelativeForce(0f, 0f, thrust);
 		else
@@ -77,38 +78,65 @@ public class AirplaneController : MonoBehaviour {
 			torque *= boostTorqueMult;
 
 		rb.AddRelativeTorque(Mathf.Clamp(sqrVel, minSqrVel, maxSqrVel) * torque);
-		currentAileronDeflection.x = Mathf.Clamp(Input.GetAxis("Horizontal") + Input.GetAxis("Vertical"), -1f, 1f);
-		currentAileronDeflection.y = Mathf.Clamp(-Input.GetAxis("Horizontal") + Input.GetAxis("Vertical"), -1f, 1f);
-
-		//Move elevons
-		if (rightElevon != null && leftElevon != null) {
-			rightElevon.localRotation = Quaternion.Slerp(rightElevon.localRotation, Quaternion.Euler(
-				Vector3.right * ((currentAileronDeflection.x * maxAileronDeflection) + aileronDeflectionOffset)), .1f);
-			leftElevon.localRotation = Quaternion.Slerp(leftElevon.localRotation, Quaternion.Euler(
-				Vector3.right * ((currentAileronDeflection.y * maxAileronDeflection) + aileronDeflectionOffset)), .1f);
-		}
 	}
 
 	public void ShutDown () {
-		if (rightElevon != null && leftElevon != null) {
-			rightElevon.localEulerAngles = Vector3.right * aileronDeflectionOffset;
-			leftElevon.localEulerAngles = Vector3.right * aileronDeflectionOffset;
-		}
+		player.flying = false;
+		trailCam.SetActive(false);
 		trails.SetActive(false);
-		this.enabled = false;
-		//boostTrail.emissionRate = 0f;
+		boostTrail.enableEmission = false;
+		if (player.onShip) {
+			transform.position = dockPos;
+			transform.rotation = airship.transform.rotation;
+			FixedJoint joint = gameObject.AddComponent<FixedJoint>();
+			joint.connectedBody = airship;
+			joint.enableCollision = false;
+		} else {
+			transform.rotation = Quaternion.Euler(0f, transform.localEulerAngles.y, 0f);
+			rb.isKinematic = true;
 
+			//Places the player and glider on the ground
+			RaycastHit groundTest;
+			if (Physics.Raycast(transform.position, Vector3.down, out groundTest, 100f)) {
+				player.transform.position = groundTest.point + (Vector3.up * 0.1f);
+				transform.position = groundTest.point + (Vector3.up * 0.5f);
+			} else {
+				//Landing failed.  Placeholder code
+				player.transform.position = transform.position;
+			}
+		}
+		this.enabled = false;
+	}
+
+	public void StartUp () {
+		lastLaunchTime = Time.time;
+		rb.isKinematic = false;	//Only matters when leaving the ground
+		player.flying = true;
+		trails.SetActive(true);
+		boostTrail.enableEmission = true;
+		trailCam.SetActive(true);
+		FixedJoint joint = gameObject.GetComponent<FixedJoint>();
+		if (joint != null)
+			Destroy(joint);
+		else
+			Debug.Log("FixedJoint doesn't exist!?");
+		rb.AddRelativeForce(launchForce * 10000f);
 	}
 
 	void OnTriggerStay (Collider other) {
-		if (other.tag != "Player")
+		if (Time.time < lastLaunchTime + launchTime)
 			return;
 
-		if (airship.velocity.magnitude >= maxLaunchSpeed)
-			return;
-
-		if (Input.GetButtonUp("Use")) {
-			GameObject.Find("Player Controller").GetComponent<PlayerState>().SetFlyingState(true);
+		if (player.flying) {
+			if (other.tag == "Airship") {
+				player.onShip = true;
+				player.transform.position = player.lastShipPos;
+				ShutDown();
+			} else {
+				player.flying = false;
+				player.onShip = false;
+				ShutDown();
+			}
 		}
 	}
 

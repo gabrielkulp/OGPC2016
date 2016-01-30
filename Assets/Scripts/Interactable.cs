@@ -11,7 +11,6 @@ public class Interactable : MonoBehaviour {
 	public Vector2 limits = Vector2.up;
 	Vector3 startPos = Vector3.zero;
 	Quaternion startRot = Quaternion.identity;
-//	Quaternion lastRot = Quaternion.identity;
 	public float position = 0f;
 	public bool snap = false;
 	public float snapIncrement = 35f;
@@ -19,12 +18,12 @@ public class Interactable : MonoBehaviour {
 	JointSpring spring;
 	
 	public OutputMode outputRange = OutputMode.ZeroToOne;
+	public AnimationCurve outputScale;
 	public float output = 0f;
 
 	void Start () {
 		startPos = transform.localPosition;
 		startRot = transform.localRotation;
-		//		lastRot = startRot;
 		if (motion == InteractionMode.Rotational) {
 			joint = GetComponent<HingeJoint>();
 			spring = joint.spring;
@@ -36,15 +35,9 @@ public class Interactable : MonoBehaviour {
 		if (motion == InteractionMode.Linear) {
 			position = Vector3.Distance(startPos, transform.position);
 		} else if (motion == InteractionMode.Rotational) {
-		/*			float rotDelta = Quaternion.Angle(lastRot, transform.localRotation);
-		//			Debug.Log(rotDelta);
-		//			position += rotDelta;
-					position = Quaternion.Angle(startRot, transform.localRotation);
-					lastRot = transform.rotation; */
 
 			Vector3 vecA = startRot * Vector3.up;
 			Vector3 vecB = transform.localRotation * Vector3.up;
-			//Debug.Log(vecA + "  " + vecB);
 			float angleA;
 			float angleB;
 		
@@ -77,8 +70,8 @@ public class Interactable : MonoBehaviour {
 		}
 		
 		if (outputRange == OutputMode.ZeroToOne)
-			output = Mathf.InverseLerp(limits.x, limits.y, position);
+			output = outputScale.Evaluate(Mathf.InverseLerp(limits.x, limits.y, position));
 		else if (outputRange == OutputMode.NegativeOneToOne)
-			output = (Mathf.InverseLerp(limits.x, limits.y, position) * 2f) - 1f;
+			output = outputScale.Evaluate((Mathf.InverseLerp(limits.x, limits.y, position) * 2f) - 1f);
 	}
 }
