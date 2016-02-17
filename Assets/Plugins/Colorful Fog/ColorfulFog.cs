@@ -72,9 +72,10 @@ public class ColorfulFog : MonoBehaviour
     }
     void OnDisable()
     {
-        //free resources.
-        if (depthCamera != null)
-            Destroy(depthCamera.gameObject);
+		//free resources.
+		if (depthCamera != null) {
+			DestroyImmediate(depthCamera.gameObject);
+		}
 
         if (depthTexture != null)
         {
