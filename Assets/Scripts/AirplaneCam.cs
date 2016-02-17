@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class AirplaneCam : MonoBehaviour {
-	public Camera cam;
+	public Camera[] cam;
 	public Rigidbody follow;
 	public Vector3 offset;
 	public float smoothCam;
@@ -14,8 +14,9 @@ public class AirplaneCam : MonoBehaviour {
 
 	void Update () {
 		//Since FOV is graphical, it is manipulated every rendered frame.
-		cam.fieldOfView = fovKick.Evaluate(follow.velocity.magnitude);
-
+		for (int i = 0; i < cam.Length; i++) {
+			cam[i].fieldOfView = fovKick.Evaluate(follow.velocity.magnitude);
+		}
 	}
 
 	void FixedUpdate () {

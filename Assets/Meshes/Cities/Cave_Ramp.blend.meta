@@ -1,47 +1,30 @@
 fileFormatVersion: 2
-guid: bf17ec979639c644b98136b79746503c
-timeCreated: 1450729679
+guid: 0333fe6518ed7d74582e768a4d3a08dc
+timeCreated: 1454812053
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: //RootNode
-    100002: Glider_Bullshit
-    100004: Glider_Bullshit_001
-    100006: Glider_Bullshit_002
-    100008: Feathers
-    100010: Plane
-    100012: Wing
-    100014: Plane_001
-    400000: //RootNode
-    400002: Glider_Bullshit
-    400004: Glider_Bullshit_001
-    400006: Glider_Bullshit_002
-    400008: Feathers
-    400010: Plane
-    400012: Wing
-    400014: Plane_001
-    2300000: Glider_Bullshit
-    2300002: Glider_Bullshit_001
-    2300004: Glider_Bullshit_002
-    2300006: Feathers
-    2300008: Plane
-    2300010: Wing
-    2300012: Plane_001
-    3300000: Glider_Bullshit
-    3300002: Glider_Bullshit_001
-    3300004: Glider_Bullshit_002
-    3300006: Feathers
-    3300008: Plane
-    3300010: Wing
-    3300012: Plane_001
-    4300000: Glider_Bullshit_002
-    4300002: Glider_Bullshit_001
-    4300004: Glider_Bullshit
-    4300006: Plane
-    4300008: Feathers
-    4300010: Wing
-    4300012: Plane_001
+    100000: BigRock
+    100002: //RootNode
+    100004: RockFirstStep
+    100006: RockSecondStep
+    400000: BigRock
+    400002: //RootNode
+    400004: RockFirstStep
+    400006: RockSecondStep
+    2300000: BigRock
+    2300002: RockFirstStep
+    2300004: RockSecondStep
+    3300000: BigRock
+    3300002: RockFirstStep
+    3300004: RockSecondStep
+    4300000: RockFirstStep
+    4300002: BigRock
+    4300004: RockSecondStep
+    6400000: BigRock
+    6400002: RockFirstStep
+    6400004: RockSecondStep
     7400000: Default Take
     9500000: //RootNode
   materials:
@@ -65,12 +48,12 @@ ModelImporter:
     animationWrapMode: 0
     extraExposedTransformPaths: []
     clipAnimations: []
-    isReadable: 0
+    isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: 4
     meshCompression: 0
-    addColliders: 0
+    addColliders: 1
     importBlendShapes: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
@@ -84,9 +67,9 @@ ModelImporter:
     secondaryUVPackMargin: 4
     useFileScale: 1
   tangentSpace:
-    normalSmoothAngle: 30
+    normalSmoothAngle: 60
     normalImportMode: 0
-    tangentImportMode: 4
+    tangentImportMode: 3
   importAnimation: 0
   copyAvatar: 0
   humanDescription:

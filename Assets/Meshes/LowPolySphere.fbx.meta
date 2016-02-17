@@ -1,55 +1,21 @@
 fileFormatVersion: 2
-guid: bf17ec979639c644b98136b79746503c
-timeCreated: 1450729679
-licenseType: Free
+guid: 103612e5e1ff43a4e896c567a2cb3ae1
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
     100000: //RootNode
-    100002: Glider_Bullshit
-    100004: Glider_Bullshit_001
-    100006: Glider_Bullshit_002
-    100008: Feathers
-    100010: Plane
-    100012: Wing
-    100014: Plane_001
     400000: //RootNode
-    400002: Glider_Bullshit
-    400004: Glider_Bullshit_001
-    400006: Glider_Bullshit_002
-    400008: Feathers
-    400010: Plane
-    400012: Wing
-    400014: Plane_001
-    2300000: Glider_Bullshit
-    2300002: Glider_Bullshit_001
-    2300004: Glider_Bullshit_002
-    2300006: Feathers
-    2300008: Plane
-    2300010: Wing
-    2300012: Plane_001
-    3300000: Glider_Bullshit
-    3300002: Glider_Bullshit_001
-    3300004: Glider_Bullshit_002
-    3300006: Feathers
-    3300008: Plane
-    3300010: Wing
-    3300012: Plane_001
-    4300000: Glider_Bullshit_002
-    4300002: Glider_Bullshit_001
-    4300004: Glider_Bullshit
-    4300006: Plane
-    4300008: Feathers
-    4300010: Wing
-    4300012: Plane_001
-    7400000: Default Take
-    9500000: //RootNode
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: pSphere1
+    4300002: LowPolySphere
+    11100000: //RootNode
   materials:
     importMaterials: 0
-    materialName: 0
-    materialSearch: 1
+    materialName: 1
+    materialSearch: 2
   animations:
-    legacyGenerateAnimations: 4
+    legacyGenerateAnimations: 0
     bakeSimulation: 0
     resampleRotations: 1
     optimizeGameObjects: 0
@@ -74,7 +40,7 @@ ModelImporter:
     importBlendShapes: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
-    useFileUnits: 1
+    useFileUnits: 0
     optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
@@ -82,12 +48,12 @@ ModelImporter:
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
-    useFileScale: 1
+    useFileScale: 0
   tangentSpace:
-    normalSmoothAngle: 30
-    normalImportMode: 0
+    normalSmoothAngle: 180
+    normalImportMode: 1
     tangentImportMode: 4
-  importAnimation: 0
+  importAnimation: 1
   copyAvatar: 0
   humanDescription:
     human: []
@@ -102,7 +68,7 @@ ModelImporter:
     rootMotionBoneName: 
     hasTranslationDoF: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 0
+  animationType: 1
   humanoidOversampling: 1
   additionalBone: 0
   userData: 

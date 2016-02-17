@@ -1,47 +1,30 @@
 fileFormatVersion: 2
-guid: bf17ec979639c644b98136b79746503c
-timeCreated: 1450729679
+guid: 5c608ca21ed95f84d8b1bf4454e1a4a8
+timeCreated: 1454348904
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: //RootNode
-    100002: Glider_Bullshit
-    100004: Glider_Bullshit_001
-    100006: Glider_Bullshit_002
-    100008: Feathers
-    100010: Plane
-    100012: Wing
-    100014: Plane_001
-    400000: //RootNode
-    400002: Glider_Bullshit
-    400004: Glider_Bullshit_001
-    400006: Glider_Bullshit_002
-    400008: Feathers
-    400010: Plane
-    400012: Wing
-    400014: Plane_001
-    2300000: Glider_Bullshit
-    2300002: Glider_Bullshit_001
-    2300004: Glider_Bullshit_002
-    2300006: Feathers
-    2300008: Plane
-    2300010: Wing
-    2300012: Plane_001
-    3300000: Glider_Bullshit
-    3300002: Glider_Bullshit_001
-    3300004: Glider_Bullshit_002
-    3300006: Feathers
-    3300008: Plane
-    3300010: Wing
-    3300012: Plane_001
-    4300000: Glider_Bullshit_002
-    4300002: Glider_Bullshit_001
-    4300004: Glider_Bullshit
-    4300006: Plane
-    4300008: Feathers
-    4300010: Wing
-    4300012: Plane_001
+    100000: Circle_001
+    100002: Cube
+    100004: Plane
+    100006: //RootNode
+    400000: Circle_001
+    400002: Cube
+    400004: Plane
+    400006: //RootNode
+    2300000: Circle_001
+    2300002: Cube
+    2300004: Plane
+    3300000: Circle_001
+    3300002: Cube
+    3300004: Plane
+    4300000: Plane
+    4300002: Cube
+    4300004: Circle_001
+    6400000: Circle_001
+    6400002: Cube
+    6400004: Plane
     7400000: Default Take
     9500000: //RootNode
   materials:
@@ -70,7 +53,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 0
+    addColliders: 1
     importBlendShapes: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
@@ -84,7 +67,7 @@ ModelImporter:
     secondaryUVPackMargin: 4
     useFileScale: 1
   tangentSpace:
-    normalSmoothAngle: 30
+    normalSmoothAngle: 0
     normalImportMode: 0
     tangentImportMode: 4
   importAnimation: 0

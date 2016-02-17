@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
-//using UnityEditor;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour {
 	public float walkSpeed;
 	public float sprintSpeed;
+	public float swimSpeedMult;		//Multiply walk speed by this to get swim speed
 	public float airSpeedMult;		//Fractional multiplier of moveSpeed for when you're in the air.
 	public float jumpSpeed;
 
@@ -18,13 +19,14 @@ public class Player : MonoBehaviour {
 	public float viewBobResetLerpCoeff = 0.2f;
 	Vector3 headOffset = Vector3.up * 1.45f;
 	Vector3 viewDelta = Vector3.zero;
-
+	
 	[HideInInspector]
 	public Vector3 lastShipPos;
 
 	public float gravMultiplier = 2f;
 	CharacterController cc;
 	Vector3 ccMotion = Vector3.zero;
+	Vector3 respawnPos = Vector3.zero;
 
 	public float reach = 2f;
 	public float springConstant = 5f;
@@ -38,16 +40,28 @@ public class Player : MonoBehaviour {
 	bool lastMouseState = false;
 
 	public float camSpeed = 8f;
-	Transform floatHead;
-	public Camera floatCam;
-	Camera fixedCam;
+	public Transform floatCam;	//The moveable head that goes on the ship sometimes
+	Transform fixedHead;		//The dummy head on the player
+	Camera fixedCam;			//The dummy camera on the player used for raycasts
 	float camRot = 0f;
 
 	[HideInInspector]
 	public bool onShip = true;
 	[HideInInspector]
 	public bool flying = false;
+	//[HideInInspector]
+	public bool swimming = false;
 
+	//Fix things when going to a side level
+	void OnLevelWasLoaded (int level) {
+		if (level > 1) {
+			swimming = false;
+			respawnPos = Vector3.zero;
+			transform.position = respawnPos;
+		}
+	}
+
+	//Initialization
 	void Start () {
 		cc = GetComponent<CharacterController>();
 		ccMotion = Vector3.zero;
@@ -55,12 +69,22 @@ public class Player : MonoBehaviour {
 		viewBobTime = 0f;
 		//headOffset = camRig.transform.localPosition;
 		viewDelta = Vector3.zero;
-		floatHead = transform.GetChild(0);
-		headOffset = floatHead.localPosition;
-		fixedCam = floatHead.GetComponentInChildren<Camera>();
+		fixedHead = transform.GetChild(0);
+		headOffset = fixedHead.localPosition;
+		fixedCam = fixedHead.GetComponentInChildren<Camera>();
 		Cursor.visible = false;
 	}
 
+	//Enable/disable head, check for respawn
+	void Update () {
+		fixedHead.gameObject.SetActive(!flying);
+
+		//shipCam.fieldOfView = cam.fieldOfView;
+		if (Input.GetKeyUp(KeyCode.R))
+			transform.position = respawnPos;
+	}
+
+	//Fly, interact, move, view bob, gravity
 	void FixedUpdate () {
 		if (flying)
 			return;
@@ -103,7 +127,7 @@ public class Player : MonoBehaviour {
 		if ((interacting && !Input.GetMouseButton(0)) || 
 			(interactionHit.transform != null && Vector3.Distance(
 				interactionHit.transform.transform.TransformPoint(touchPos),
-				floatHead.position) >= reach)) {
+				fixedHead.position) >= reach)) {
 
 			interacting = false;
 		}
@@ -122,7 +146,7 @@ public class Player : MonoBehaviour {
 		//View bob
 		float bobLength = (Input.GetButton("Sprint") ? sprintViewBobLoopLength : viewBobLoopLength);
 		Vector2 bobMag = (Input.GetButton("Sprint") ? sprintViewBobMagnitude : viewBobMagnitude);
-
+		
 		if (cc.isGrounded) {
 			if (Vector3.Scale(ccMotion, new Vector3(1f, 0f, 1f)).magnitude > 0f) {
 				viewBobTime += (Time.fixedDeltaTime * ccMotion.magnitude) / (bobLength * moveSpeed);
@@ -135,18 +159,18 @@ public class Player : MonoBehaviour {
 				viewBobTime = 0f;
 			}
 		}
-		floatHead.localPosition = headOffset + viewDelta;
+		fixedHead.localPosition = headOffset + viewDelta;
 
 		//Deal with jumping and gravity
 		if (cc.isGrounded) {
 			ccMotion.y = 0f;
-			if (Input.GetButton("Jump"))
-				ccMotion.y = jumpSpeed;
 		} else {
 			ccMotion += Physics.gravity * gravMultiplier * Time.fixedDeltaTime;
 		}
+		if (Input.GetButton("Jump") && (cc.isGrounded || swimming))
+			ccMotion.y = jumpSpeed;
 
-		cc.Move(ccMotion * Time.fixedDeltaTime);
+		cc.Move(ccMotion * Time.fixedDeltaTime * (swimming ? swimSpeedMult / 2 : 1f));
 		if (onShip && !flying)
 			lastShipPos = transform.position;
 
@@ -156,9 +180,13 @@ public class Player : MonoBehaviour {
 		lastMouseState = Input.GetMouseButton(0);
 	}
 
+	//Camera movement
 	void LateUpdate () {
-		floatCam.gameObject.SetActive(!flying);
-		fixedCam.gameObject.SetActive(!flying);
+		//if (floatCam != null)
+			floatCam.gameObject.SetActive(!flying);
+		//if (fixedCam != null)
+			fixedCam.gameObject.SetActive(!flying);
+
 		if (flying)
 			return;
 
@@ -170,26 +198,29 @@ public class Player : MonoBehaviour {
 			camRot = Mathf.Clamp(camRot, -90, 90);
 
 			transform.Rotate(transform.up, mouseX * camSpeed);
-			floatHead.localEulerAngles = Vector3.right * camRot;
+			fixedHead.localEulerAngles = Vector3.right * camRot;
 		}
 
 		if (onShip) {
-			floatCam.transform.localRotation = floatHead.rotation;
-			floatCam.transform.localPosition = floatHead.position;
+			floatCam.localRotation = fixedHead.rotation;
+			floatCam.localPosition = fixedHead.position;
 		} else {
-			floatCam.transform.rotation = floatHead.rotation;
-			floatCam.transform.position = floatHead.position;
+			floatCam.rotation = fixedHead.rotation;
+			floatCam.position = fixedHead.position;
 		}
 	}
 
-	void Update () {
-		floatHead.gameObject.SetActive(!flying);
-
-		//shipCam.fieldOfView = cam.fieldOfView;
-		if (Input.GetKeyUp(KeyCode.R))
-			Application.LoadLevel(Application.loadedLevel);
+	void OnTriggerEnter (Collider other) {
+		if (other.gameObject.layer == 4)	//Layer 4 is water
+			swimming = true;
 	}
 
+	void OnTriggerExit (Collider other) {
+		if (other.gameObject.layer == 4)    //Layer 4 is water
+			swimming = false;
+	}
+
+	//Draw interaction GUI
 	void OnGUI () {
 		if (flying)
 			return;

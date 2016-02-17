@@ -23,7 +23,8 @@ public class AirplaneController : MonoBehaviour {
 	float lastLaunchTime;
 
 	Rigidbody rb;
-	Vector3 dockPos = Vector3.zero;
+	
+	public Vector3 dockPos = Vector3.zero;
 
 
 	public GameObject trails;
@@ -39,7 +40,6 @@ public class AirplaneController : MonoBehaviour {
 	void Start () {
 		rb = GetComponent<Rigidbody>();
 		boostTrailBaseRate = boostTrail.startLifetime;
-		dockPos = airship.transform.InverseTransformPoint(transform.position);
 		ShutDown();
     }
 
@@ -80,34 +80,6 @@ public class AirplaneController : MonoBehaviour {
 		rb.AddRelativeTorque(Mathf.Clamp(sqrVel, minSqrVel, maxSqrVel) * torque);
 	}
 
-	public void ShutDown () {
-		player.flying = false;
-		trailCam.SetActive(false);
-		trails.SetActive(false);
-		boostTrail.enableEmission = false;
-		if (player.onShip) {
-			transform.position = airship.transform.TransformPoint(dockPos);
-			transform.rotation = airship.transform.rotation;
-			FixedJoint joint = gameObject.AddComponent<FixedJoint>();
-			joint.connectedBody = airship;
-			joint.enableCollision = false;
-		} else {
-			transform.rotation = Quaternion.Euler(0f, transform.localEulerAngles.y, 0f);
-			rb.isKinematic = true;
-
-			//Places the player and glider on the ground
-			RaycastHit groundTest;
-			if (Physics.Raycast(transform.position, Vector3.down, out groundTest, 100f)) {
-				player.transform.position = groundTest.point + (Vector3.up * 0.1f);
-				transform.position = groundTest.point + (Vector3.up * 0.5f);
-			} else {
-				//Landing failed.  Placeholder code
-				player.transform.position = transform.position;
-			}
-		}
-		this.enabled = false;
-	}
-
 	public void StartUp () {
 		lastLaunchTime = Time.time;
 		rb.isKinematic = false;	//Only matters when leaving the ground
@@ -118,9 +90,28 @@ public class AirplaneController : MonoBehaviour {
 		FixedJoint joint = gameObject.GetComponent<FixedJoint>();
 		if (joint != null)
 			Destroy(joint);
-		else
-			Debug.Log("FixedJoint doesn't exist!?");
 		rb.AddRelativeForce(launchForce * 10000f);
+	}
+
+	public void ShutDown () {
+		player.flying = false;
+		trailCam.SetActive(false);
+		trails.SetActive(false);
+		ParticleSystem.EmissionModule newEmitter = boostTrail.emission;
+		newEmitter.enabled = false;
+		//boostTrail. = newEmitter;
+		if (player.onShip) {
+			transform.position = airship.transform.TransformPoint(dockPos);
+			transform.rotation = airship.transform.rotation;
+			FixedJoint joint = gameObject.AddComponent<FixedJoint>();
+			joint.connectedBody = airship;
+			joint.enableCollision = false;
+		} else {
+			transform.rotation = Quaternion.Euler(0f, transform.localEulerAngles.y, 0f);
+			player.transform.rotation = transform.rotation;
+			rb.isKinematic = true;
+		}
+		this.enabled = false;
 	}
 
 	void OnTriggerStay (Collider other) {
@@ -131,12 +122,24 @@ public class AirplaneController : MonoBehaviour {
 			if (other.tag == "Airship") {
 				player.onShip = true;
 				player.transform.position = player.lastShipPos;
-				ShutDown();
 			} else {
+				//Places the player and glider on the ground
+				RaycastHit planeGroundTest;
+				if (Physics.Raycast(transform.position, Vector3.down, out planeGroundTest, 100f)) {
+					Vector3 testPos = transform.position;
+					testPos += Quaternion.Euler(0f, transform.localEulerAngles.y, 0f) * Vector3.back * 3f;
+					RaycastHit playerGroundTest;
+					if (Physics.Raycast(testPos, Vector3.down, out playerGroundTest, 3f)) {
+						player.transform.position = playerGroundTest.point + (Vector3.up * 0.1f);
+						transform.position = planeGroundTest.point + (Vector3.up * 0.5f);
+					} else
+						return;
+				} else
+					return;
 				player.flying = false;
 				player.onShip = false;
-				ShutDown();
 			}
+			ShutDown();
 		}
 	}
 
