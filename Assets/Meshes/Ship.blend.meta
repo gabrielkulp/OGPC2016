@@ -24,6 +24,22 @@ ModelImporter:
     100032: Ship
     100034: SideMast
     100036: Stairs
+    100038: Engines
+    100040: MastCross_High
+    100042: MastCross_Low
+    100044: MetalPost_Back
+    100046: MetalPost_Front
+    100048: Prop
+    100050: Prop_001
+    100052: Prop_002
+    100054: Prop_003
+    100056: Prop_004
+    100058: Prop_005
+    100060: Prop_006
+    100062: Prop_007
+    100064: Prop_Core
+    100066: Stairs_Lower
+    100068: Stairs_Upper
     400000: Cylinder
     400002: Cylinder_001
     400004: Cylinder_002
@@ -43,6 +59,22 @@ ModelImporter:
     400032: Ship
     400034: SideMast
     400036: Stairs
+    400038: Engines
+    400040: MastCross_High
+    400042: MastCross_Low
+    400044: MetalPost_Back
+    400046: MetalPost_Front
+    400048: Prop
+    400050: Prop_001
+    400052: Prop_002
+    400054: Prop_003
+    400056: Prop_004
+    400058: Prop_005
+    400060: Prop_006
+    400062: Prop_007
+    400064: Prop_Core
+    400066: Stairs_Lower
+    400068: Stairs_Upper
     2300000: Cylinder
     2300002: Cylinder_001
     2300004: Cylinder_002
@@ -61,6 +93,22 @@ ModelImporter:
     2300030: Ship
     2300032: SideMast
     2300034: Stairs
+    2300036: Engines
+    2300038: MastCross_High
+    2300040: MastCross_Low
+    2300042: MetalPost_Back
+    2300044: MetalPost_Front
+    2300046: Prop
+    2300048: Prop_001
+    2300050: Prop_002
+    2300052: Prop_003
+    2300054: Prop_004
+    2300056: Prop_005
+    2300058: Prop_006
+    2300060: Prop_007
+    2300062: Prop_Core
+    2300064: Stairs_Lower
+    2300066: Stairs_Upper
     3300000: Cylinder
     3300002: Cylinder_001
     3300004: Cylinder_002
@@ -79,6 +127,22 @@ ModelImporter:
     3300030: Ship
     3300032: SideMast
     3300034: Stairs
+    3300036: Engines
+    3300038: MastCross_High
+    3300040: MastCross_Low
+    3300042: MetalPost_Back
+    3300044: MetalPost_Front
+    3300046: Prop
+    3300048: Prop_001
+    3300050: Prop_002
+    3300052: Prop_003
+    3300054: Prop_004
+    3300056: Prop_005
+    3300058: Prop_006
+    3300060: Prop_007
+    3300062: Prop_Core
+    3300064: Stairs_Lower
+    3300066: Stairs_Upper
     4300000: Sail_Higher_001
     4300002: Cylinder_003
     4300004: Cylinder_002
@@ -97,6 +161,22 @@ ModelImporter:
     4300030: SideMast
     4300032: Mast
     4300034: Ship
+    4300036: Stairs_Lower
+    4300038: Prop_Core
+    4300040: Prop_001
+    4300042: Prop_002
+    4300044: Prop_003
+    4300046: Prop_004
+    4300048: Prop_005
+    4300050: Prop_006
+    4300052: Prop_007
+    4300054: Prop
+    4300056: Engines
+    4300058: MetalPost_Front
+    4300060: MetalPost_Back
+    4300062: MastCross_High
+    4300064: MastCross_Low
+    4300066: Stairs_Upper
     6400000: Cylinder
     6400002: Cylinder_001
     6400004: Cylinder_002
@@ -115,6 +195,22 @@ ModelImporter:
     6400030: Ship
     6400032: SideMast
     6400034: Stairs
+    6400036: Engines
+    6400038: MastCross_High
+    6400040: MastCross_Low
+    6400042: MetalPost_Back
+    6400044: MetalPost_Front
+    6400046: Prop
+    6400048: Prop_001
+    6400050: Prop_002
+    6400052: Prop_003
+    6400054: Prop_004
+    6400056: Prop_005
+    6400058: Prop_006
+    6400060: Prop_007
+    6400062: Prop_Core
+    6400064: Stairs_Lower
+    6400066: Stairs_Upper
     7400000: Default Take
     9500000: //RootNode
   materials:

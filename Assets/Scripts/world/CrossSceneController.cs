@@ -90,7 +90,6 @@ public class CrossSceneController : MonoBehaviour {
 		//player = GameObject.Find("Player");
 		Vector3 playerPos = player.transform.position;
 		Vector3 playerRot = player.transform.eulerAngles;
-		Debug.Log(playerPos);
 		playerPos.x = PlayerPrefs.GetFloat("playerPosX", playerPos.x);
 		playerPos.y = PlayerPrefs.GetFloat("playerPosY", playerPos.y);
 		playerPos.z = PlayerPrefs.GetFloat("playerPosZ", playerPos.z);

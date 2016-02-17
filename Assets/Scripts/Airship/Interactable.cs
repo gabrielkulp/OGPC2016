@@ -57,12 +57,13 @@ public class Interactable : MonoBehaviour {
 					break;
 			}
 
-			position = Mathf.DeltaAngle(angleA, angleB);
+			position = -Mathf.DeltaAngle(angleA, angleB);
 			if (snap) {
-				if (position - joint.spring.targetPosition > snapIncrement / 2f) {
+				float tempPos = position - spring.targetPosition;
+                if ((tempPos > snapIncrement / 2f) && (tempPos < snapIncrement)) {
 					spring.targetPosition += snapIncrement;
 					joint.spring = spring;
-				} else if (position - joint.spring.targetPosition < -snapIncrement / 2f) {
+				} else if ((tempPos < -snapIncrement / 2f) && (tempPos > -snapIncrement)) {
 					spring.targetPosition -= snapIncrement;
 					joint.spring = spring;
 				}
@@ -70,8 +71,8 @@ public class Interactable : MonoBehaviour {
 		}
 		
 		if (outputRange == OutputMode.ZeroToOne)
-			output = outputScale.Evaluate(Mathf.InverseLerp(limits.x, limits.y, position));
+			output = outputScale.Evaluate(Mathf.InverseLerp(limits.x, limits.y, -position));
 		else if (outputRange == OutputMode.NegativeOneToOne)
-			output = outputScale.Evaluate((Mathf.InverseLerp(limits.x, limits.y, position) * 2f) - 1f);
+			output = outputScale.Evaluate((Mathf.InverseLerp(limits.x, limits.y, -position) * 2f) - 1f);
 	}
 }

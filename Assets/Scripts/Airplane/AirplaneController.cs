@@ -106,6 +106,7 @@ public class AirplaneController : MonoBehaviour {
 			FixedJoint joint = gameObject.AddComponent<FixedJoint>();
 			joint.connectedBody = airship;
 			joint.enableCollision = false;
+			fuel = 1f;
 		} else {
 			transform.rotation = Quaternion.Euler(0f, transform.localEulerAngles.y, 0f);
 			player.transform.rotation = transform.rotation;
@@ -126,6 +127,8 @@ public class AirplaneController : MonoBehaviour {
 				//Places the player and glider on the ground
 				RaycastHit planeGroundTest;
 				if (Physics.Raycast(transform.position, Vector3.down, out planeGroundTest, 100f)) {
+					//if (Vector3.Angle(planeGroundTest.normal, Vector3.zero) > 20f)
+					//	return;
 					Vector3 testPos = transform.position;
 					testPos += Quaternion.Euler(0f, transform.localEulerAngles.y, 0f) * Vector3.back * 3f;
 					RaycastHit playerGroundTest;
@@ -140,6 +143,7 @@ public class AirplaneController : MonoBehaviour {
 				player.onShip = false;
 			}
 			ShutDown();
+			player.respawnPos = player.transform.position;
 		}
 	}
 

@@ -9,6 +9,9 @@ public class Player : MonoBehaviour {
 	public float airSpeedMult;		//Fractional multiplier of moveSpeed for when you're in the air.
 	public float jumpSpeed;
 
+	public AudioClip walkSound;
+	public AudioClip sprintSound;
+
 	public AnimationCurve viewBobX;
 	public AnimationCurve viewBobY;
 	public Vector2 viewBobMagnitude = Vector2.one * 0.1f;
@@ -26,7 +29,7 @@ public class Player : MonoBehaviour {
 	public float gravMultiplier = 2f;
 	CharacterController cc;
 	Vector3 ccMotion = Vector3.zero;
-	Vector3 respawnPos = Vector3.zero;
+	public Vector3 respawnPos = Vector3.zero;
 
 	public float reach = 2f;
 	public float springConstant = 5f;
@@ -81,7 +84,7 @@ public class Player : MonoBehaviour {
 
 		//shipCam.fieldOfView = cam.fieldOfView;
 		if (Input.GetKeyUp(KeyCode.R))
-			transform.position = respawnPos;
+			Respawn();
 	}
 
 	//Fly, interact, move, view bob, gravity
@@ -137,18 +140,32 @@ public class Player : MonoBehaviour {
 		}
 
 		//Move the character controller
-		float moveSpeed = (Input.GetKey(KeyCode.LeftShift) ? sprintSpeed : walkSpeed);
+		float moveSpeed = (Input.GetButton("Sprint") ? sprintSpeed : walkSpeed);
         ccMotion = new Vector3(0, ccMotion.y, 0);
 		ccMotion += Vector3.ClampMagnitude(
 			new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")), 1f) * moveSpeed;
 		ccMotion = transform.rotation * ccMotion;
 
+		//Audio
+		Vector3 flatMotion = Vector3.Scale(ccMotion, new Vector3(1f, 0f, 1f));
+        if (Input.GetButton("Sprint"))
+			GetComponent<AudioSource>().clip = sprintSound;
+		else
+			GetComponent<AudioSource>().clip = walkSound;
+
+		if (flatMotion.magnitude > 0.1f && cc.isGrounded) {
+			if (!GetComponent<AudioSource>().isPlaying)
+				GetComponent<AudioSource>().Play();
+		} else {
+			GetComponent<AudioSource>().Stop();
+        }
+
 		//View bob
 		float bobLength = (Input.GetButton("Sprint") ? sprintViewBobLoopLength : viewBobLoopLength);
 		Vector2 bobMag = (Input.GetButton("Sprint") ? sprintViewBobMagnitude : viewBobMagnitude);
-		
+
 		if (cc.isGrounded) {
-			if (Vector3.Scale(ccMotion, new Vector3(1f, 0f, 1f)).magnitude > 0f) {
+			if (flatMotion.magnitude > 0f) {
 				viewBobTime += (Time.fixedDeltaTime * ccMotion.magnitude) / (bobLength * moveSpeed);
 				viewDelta.x = viewBobX.Evaluate(viewBobTime);
 				viewDelta.y = viewBobY.Evaluate(viewBobTime);
@@ -163,7 +180,7 @@ public class Player : MonoBehaviour {
 
 		//Deal with jumping and gravity
 		if (cc.isGrounded) {
-			ccMotion.y = 0f;
+			ccMotion.y = Physics.gravity.y * gravMultiplier * Time.fixedDeltaTime;
 		} else {
 			ccMotion += Physics.gravity * gravMultiplier * Time.fixedDeltaTime;
 		}
@@ -210,9 +227,16 @@ public class Player : MonoBehaviour {
 		}
 	}
 
+	void Respawn() {
+		transform.position = respawnPos;
+	}
+
+
 	void OnTriggerEnter (Collider other) {
 		if (other.gameObject.layer == 4)	//Layer 4 is water
 			swimming = true;
+		if (other.tag == "Respawn")
+			Respawn();
 	}
 
 	void OnTriggerExit (Collider other) {
