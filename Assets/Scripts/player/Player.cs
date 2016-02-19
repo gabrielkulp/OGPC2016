@@ -31,17 +31,6 @@ public class Player : MonoBehaviour {
 	Vector3 ccMotion = Vector3.zero;
 	public Vector3 respawnPos = Vector3.zero;
 
-	public float reach = 2f;
-	public float springConstant = 5f;
-	public float maxPull = 15f;
-	bool interactionMode = false;				//Are you pressing alt to interact?
-	bool interacting = false;					//Are you currently dragging something?
-	RaycastHit interactionHit = new RaycastHit();
-	Vector3 touchPos = Vector3.zero;			//Point of contact in local coordinates
-	Vector3 mousePos = Vector3.zero;			//Mouse position relative to the world
-	Vector3 mouseDelta = Vector3.zero;			//The mouse's position relative to the point of contact
-	bool lastMouseState = false;
-
 	public float camSpeed = 8f;
 	public Transform floatCam;	//The moveable head that goes on the ship sometimes
 	Transform fixedHead;		//The dummy head on the player
@@ -91,53 +80,6 @@ public class Player : MonoBehaviour {
 	void FixedUpdate () {
 		if (flying)
 			return;
-
-		//Click and drag objects on screen
-		interactionMode = Input.GetButton("Interact");
-
-		//Start of interaction cycle
-		Ray ray = fixedCam.ScreenPointToRay(Input.mousePosition);    //Don't move this.  Magic at play.
-
-		if (interactionMode && Input.GetMouseButton(0) && !lastMouseState) {
-			//if (Input.GetKey(KeyCode.LeftControl))
-				//EditorApplication.isPaused = true;
-
-			interacting = Physics.Raycast(ray, out interactionHit, reach);
-			
-			if (interacting) {
-				touchPos = interactionHit.transform.InverseTransformPoint(interactionHit.point);
-				mousePos = touchPos;
-				mouseDelta = Vector3.zero;
-			}
-		}
-		//Update of interaction cycle
-		if (interacting) {
-			if (interactionHit.rigidbody != null) {
-				mouseDelta += new Vector3(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"), 0f) * 0.1f;
-				mouseDelta = Vector3.ClampMagnitude(mouseDelta, maxPull / springConstant);
-				Vector3 touchPosWorld = interactionHit.transform.TransformPoint(touchPos);
-				mousePos = touchPosWorld + (fixedCam.transform.rotation * mouseDelta);
-
-				Vector3 interactionForce = (mousePos - touchPosWorld) * springConstant;
-
-				interactionHit.rigidbody.AddForceAtPosition(
-					interactionForce,
-					interactionHit.transform.transform.TransformPoint(touchPos),
-					ForceMode.Force);
-			}
-		}
-		//End interaction cycle
-		if ((interacting && !Input.GetMouseButton(0)) || 
-			(interactionHit.transform != null && Vector3.Distance(
-				interactionHit.transform.transform.TransformPoint(touchPos),
-				fixedHead.position) >= reach)) {
-
-			interacting = false;
-		}
-		if (!Input.GetButton("Interact")) {
-			interacting = false;
-			interactionMode = false;
-		}
 
 		//Move the character controller
 		float moveSpeed = (Input.GetButton("Sprint") ? sprintSpeed : walkSpeed);
@@ -193,8 +135,6 @@ public class Player : MonoBehaviour {
 
 		//Ensures it stays upright
 		transform.localEulerAngles = Vector3.Scale(transform.localEulerAngles, Vector3.up);
-
-		lastMouseState = Input.GetMouseButton(0);
 	}
 
 	//Camera movement
@@ -207,16 +147,16 @@ public class Player : MonoBehaviour {
 		if (flying)
 			return;
 
-		if (!interactionMode) {
-			//Rotate the controller and/or camera
-			float mouseX = Input.GetAxisRaw("Mouse X");
-			float mouseY = Input.GetAxisRaw("Mouse Y");
-			camRot += -mouseY * camSpeed;
-			camRot = Mathf.Clamp(camRot, -90, 90);
+		
+		//Rotate the controller and/or camera
+		float mouseX = Input.GetAxisRaw("Mouse X");
+		float mouseY = Input.GetAxisRaw("Mouse Y");
+		camRot += -mouseY * camSpeed;
+		camRot = Mathf.Clamp(camRot, -90, 90);
 
-			transform.Rotate(transform.up, mouseX * camSpeed);
-			fixedHead.localEulerAngles = Vector3.right * camRot;
-		}
+		transform.Rotate(transform.up, mouseX * camSpeed);
+		fixedHead.localEulerAngles = Vector3.right * camRot;
+		
 
 		if (onShip) {
 			floatCam.localRotation = fixedHead.rotation;
@@ -242,25 +182,5 @@ public class Player : MonoBehaviour {
 	void OnTriggerExit (Collider other) {
 		if (other.gameObject.layer == 4)    //Layer 4 is water
 			swimming = false;
-	}
-
-	//Draw interaction GUI
-	void OnGUI () {
-		if (flying)
-			return;
-
-		if (interactionMode && !interacting) {
-			GUI.Box(new Rect(Input.mousePosition.x - 5f, (-(Input.mousePosition.y + 5f) + Screen.height), 10f, 10f), "");
-		}
-
-		if (interacting && interactionHit.point != null) {
-			//Draw contact point
-			Vector3 tPos = fixedCam.WorldToScreenPoint(interactionHit.transform.TransformPoint(touchPos));
-			GUI.Box(new Rect(tPos.x - 5f, (-(tPos.y + 5f) + Screen.height), 10f, 10f), "");
-			
-			//Draw mouse point
-			Vector3 mPos = fixedCam.WorldToScreenPoint(mousePos);
-			GUI.Box(new Rect(mPos.x - 5f, (-(mPos.y + 5f) + Screen.height), 	10f, 10f), "");
-		}
 	}
 }

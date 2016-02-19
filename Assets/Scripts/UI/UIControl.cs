@@ -38,9 +38,9 @@ public class UIControl : MonoBehaviour {
 				Mathf.Sin(wobbleTime.x) * camWobbleConst,
 				Mathf.Sin(wobbleTime.y) * camWobbleConst,
 				Mathf.Sin(wobbleTime.z) * camWobbleConst);
-		wobbleTime.x += Random.Range(0.9f, 1.1f) * camWobbleTimeConst * Time.deltaTime;
-		wobbleTime.y += Random.Range(0.9f, 1.1f) * camWobbleTimeConst * Time.deltaTime;
-		wobbleTime.z += Random.Range(0.9f, 1.1f) * camWobbleTimeConst * Time.deltaTime;
+		wobbleTime.x += Random.Range(0.75f, 1.25f) * camWobbleTimeConst * Time.deltaTime;
+		wobbleTime.y += Random.Range(0.75f, 1.25f) * camWobbleTimeConst * Time.deltaTime;
+		wobbleTime.z += Random.Range(0.75f, 1.25f) * camWobbleTimeConst * Time.deltaTime;
 	}
 
 	public void ButtonGotoPos (Transform camPos) {
