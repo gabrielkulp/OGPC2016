@@ -10,6 +10,7 @@ public class SceneLeave : MonoBehaviour {
 
 	void OnTriggerEnter (Collider other) {
 		if (other.transform.Equals(player)) {
+			player.GetComponent<AudioSource>().Stop();
 			sceneController.LoadSideLevel(targetScene, respawnPos.position);
 		}
 	}
