@@ -1,0 +1,189 @@
+fileFormatVersion: 2
+guid: faaed60f76db16d49a8518c54bdfbadb
+timeCreated: 1457565416
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Land1
+    100004: Land2
+    100006: Land3
+    100008: Land4
+    100010: Land5
+    100012: Land6
+    100014: Land7
+    100016: PIllar1
+    100018: Pillar2
+    100020: Pillar3
+    100022: Pillar4
+    100024: Rock
+    100026: Rock_001
+    100028: Rock_002
+    100030: Rock_003
+    100032: Rock_004
+    100034: Rock_005
+    100036: Rock_006
+    100038: Rock_007
+    400000: //RootNode
+    400002: Land1
+    400004: Land2
+    400006: Land3
+    400008: Land4
+    400010: Land5
+    400012: Land6
+    400014: Land7
+    400016: PIllar1
+    400018: Pillar2
+    400020: Pillar3
+    400022: Pillar4
+    400024: Rock
+    400026: Rock_001
+    400028: Rock_002
+    400030: Rock_003
+    400032: Rock_004
+    400034: Rock_005
+    400036: Rock_006
+    400038: Rock_007
+    2300000: Land1
+    2300002: Land2
+    2300004: Land3
+    2300006: Land4
+    2300008: Land5
+    2300010: Land6
+    2300012: Land7
+    2300014: PIllar1
+    2300016: Pillar2
+    2300018: Pillar3
+    2300020: Pillar4
+    2300022: Rock
+    2300024: Rock_001
+    2300026: Rock_002
+    2300028: Rock_003
+    2300030: Rock_004
+    2300032: Rock_005
+    2300034: Rock_006
+    2300036: Rock_007
+    3300000: Land1
+    3300002: Land2
+    3300004: Land3
+    3300006: Land4
+    3300008: Land5
+    3300010: Land6
+    3300012: Land7
+    3300014: PIllar1
+    3300016: Pillar2
+    3300018: Pillar3
+    3300020: Pillar4
+    3300022: Rock
+    3300024: Rock_001
+    3300026: Rock_002
+    3300028: Rock_003
+    3300030: Rock_004
+    3300032: Rock_005
+    3300034: Rock_006
+    3300036: Rock_007
+    4300000: Rock
+    4300002: Rock_001
+    4300004: Rock_007
+    4300006: Rock_002
+    4300008: Pillar4
+    4300010: Land1
+    4300012: Land3
+    4300014: Rock_006
+    4300016: Rock_003
+    4300018: Rock_005
+    4300020: Rock_004
+    4300022: Pillar3
+    4300024: Pillar2
+    4300026: PIllar1
+    4300028: Land4
+    4300030: Land5
+    4300032: Land7
+    4300034: Land2
+    4300036: Land6
+    6400000: Land1
+    6400002: Land2
+    6400004: Land3
+    6400006: Land4
+    6400008: Land5
+    6400010: Land6
+    6400012: Land7
+    6400014: PIllar1
+    6400016: Pillar2
+    6400018: Pillar3
+    6400020: Pillar4
+    6400022: Rock
+    6400024: Rock_001
+    6400026: Rock_002
+    6400028: Rock_003
+    6400030: Rock_004
+    6400032: Rock_005
+    6400034: Rock_006
+    6400036: Rock_007
+    7400000: Default Take
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 10
+    meshCompression: 0
+    addColliders: 1
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,26 +1,21 @@
 fileFormatVersion: 2
-guid: ca1c535ed62fc6b48a0646535a516ae9
-timeCreated: 1455710424
+guid: 38bc807f477525640b4666f8de050f09
+timeCreated: 1455841171
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: Circle
-    100002: //RootNode
-    100004: Compass
-    400000: Circle
-    400002: //RootNode
-    400004: Compass
-    2300000: Circle
-    2300002: Compass
-    3300000: Circle
-    3300002: Compass
-    4300000: Circle
-    4300002: Compass
+    100000: //RootNode
+    400000: //RootNode
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: Icosphere
+    4300002: Island_1
+    6400000: //RootNode
     7400000: Default Take
     9500000: //RootNode
   materials:
-    importMaterials: 1
+    importMaterials: 0
     materialName: 0
     materialSearch: 1
   animations:
@@ -43,9 +38,9 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 0.05
+    globalScale: 30
     meshCompression: 0
-    addColliders: 0
+    addColliders: 1
     importBlendShapes: 1
     swapUVChannels: 0
     generateSecondaryUV: 0

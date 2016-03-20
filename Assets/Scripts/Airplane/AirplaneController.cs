@@ -91,6 +91,7 @@ public class AirplaneController : MonoBehaviour {
 		if (joint != null)
 			Destroy(joint);
 		rb.AddRelativeForce(launchForce * 10000f);
+		rb.MoveRotation(Quaternion.FromToRotation(Vector3.forward, launchForce));
 	}
 
 	public void ShutDown () {
