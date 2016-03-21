@@ -2,38 +2,45 @@
 using System.Collections;
 
 public class AirplaneCam : MonoBehaviour {
-	public Camera[] cam;
-	public Rigidbody follow;
-	public Vector3 offset;
-	public float smoothCam;
-	public AnimationCurve fovKick;
-	
+	public float sensitivity = 1f;
+	public float zoomSensitivity = 1f;
+	public Transform center;
+	public Vector2 zoomLimit = new Vector2(1f, 30f);
+	public Vector2 pitchLimit = new Vector2(10f, 85f);
+	Vector3 eulers = Vector3.zero;
+	Vector3 smoothEulers = Vector3.zero;
+	public float lerpConst = 0.1f;
+	float zoomMag = 3f;
+	float smoothZoom = 3f;
+
 	void Start () {
-		ResetPosition();		
+		Cursor.visible = false;
+		Quaternion startRot;
+		startRot = Quaternion.FromToRotation(Vector3.back, transform.position - center.position);
+		eulers = startRot.eulerAngles;
+		zoomMag = Vector3.Distance(transform.position, center.position);
+		transform.LookAt(center, Vector3.up);
 	}
 
 	void Update () {
-		//Since FOV is graphical, it is manipulated every rendered frame.
-		for (int i = 0; i < cam.Length; i++) {
-			cam[i].fieldOfView = fovKick.Evaluate(follow.velocity.magnitude);
-		}
-	}
+		//Camera rig movement
+		eulers.x -= Input.GetAxis("Mouse Y") * sensitivity;
+		eulers.y += Input.GetAxis("Mouse X") * sensitivity;
+		eulers.x = Mathf.Clamp(eulers.x, pitchLimit.x, pitchLimit.y);
 
-	void FixedUpdate () {
-		//Since pos and rot are physical, they are updated every physics frame.
-		//Update position
-		Vector3 oldPos = transform.position;
-		transform.position = follow.position + (follow.velocity.normalized * offset.z) + (Vector3.up * offset.y);
-		transform.position = Vector3.Lerp(oldPos, transform.position, smoothCam);
+		smoothEulers = Vector3.Lerp(smoothEulers, eulers, lerpConst);
 
-		//Update rotation
-		Quaternion oldRot = transform.rotation;
-		transform.LookAt(follow.position, Vector3.up);
-		transform.rotation = Quaternion.Lerp(oldRot, transform.rotation, smoothCam);
+		zoomMag *= 1f + Input.GetAxis("Mouse ScrollWheel") * -zoomSensitivity;
+		zoomMag = Mathf.Clamp(zoomMag, zoomLimit.x, zoomLimit.y);
+		smoothZoom = Mathf.Lerp(smoothZoom, zoomMag, lerpConst);
+
+		transform.position = center.position + (Quaternion.Euler(smoothEulers) * Vector3.back * smoothZoom);
+		transform.LookAt(center, Vector3.up);
 	}
 
 	public void ResetPosition () {
-		transform.position = follow.position + (follow.rotation * offset);
-		transform.LookAt(follow.position);
+		transform.position = center.position - (center.forward * zoomMag);
+		transform.LookAt(center.position, Vector3.up);
 	}
 }
+

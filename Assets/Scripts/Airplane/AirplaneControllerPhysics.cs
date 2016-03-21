@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class AirplaneController : MonoBehaviour {
+public class AirplaneControllerPhysics : MonoBehaviour {
+	/*
 	public float throttle = 1f;
 	public float fuel = 1f;
 	public float fuelPerN = 0.001f;	//Fuel lost per N/s of thrust
@@ -11,14 +12,14 @@ public class AirplaneController : MonoBehaviour {
 	public float pitchTorque = 1f;
 	public float rollTorque = 2f;
 	public float yawTorque = 3f;
+	public float boostTorqueMult = 0.5f;
 	public float maxThrust = 500f;
+	public float boostThrustMult = 2f;
 	public float yawPortion = 0.3f;
 	public float maxSqrVel = 800f;
 	public float minSqrVel = 200f;
 
 	public Vector3 launchForce = Vector3.zero;
-	public float VTOLHeight = 10f;
-	public AnimationCurve VTOLSpeed;
 	public float launchTime = 3f;   //Seconds to get away before checking landing collisions again
 	float lastLaunchTime;
 
@@ -26,54 +27,37 @@ public class AirplaneController : MonoBehaviour {
 	
 	public Vector3 dockPos = Vector3.zero;
 
+
 	public GameObject trails;
 	public ParticleSystem boostTrail;
+	public float boostTrailEmitMult;
+	float boostTrailBaseRate;
 
 	public Rigidbody airship;
 	public float maxLaunchSpeed = 5f;
 	public GameObject trailCam;
 	public Player player;
 
-	bool VTOL = false;
-	float VTOLCompletion = 0f;
-
 	void Start () {
 		rb = GetComponent<Rigidbody>();
+		boostTrailBaseRate = boostTrail.startLifetime;
 		ShutDown();
     }
 
 	void FixedUpdate () {
-		if (VTOL) {
-			float moveDelta = VTOLSpeed.Evaluate(VTOLCompletion) * Time.fixedDeltaTime;
-            VTOLCompletion += Time.fixedDeltaTime;
-
-			if (VTOLCompletion < 1f)
-				transform.localPosition += Vector3.up * moveDelta;
-			else {
-				VTOL = false;
-				VTOLCompletion = 0f;
-				rb.isKinematic = false;
-				rb.AddRelativeForce(launchForce * 10000f);
-				//rb.MoveRotation(Quaternion.FromToRotation(Vector3.forward, launchForce));
-				trails.SetActive(true);
-				boostTrail.enableEmission = true;
-			}
-			return;
-		}
-
 		//Old method:
 		//rb.velocity = transform.forward * speed;
 
 		//engine
-		float thrust = maxThrust * throttle * (Input.GetButton("Jump") ? 0f : 1f);
+		float thrust = maxThrust * throttle * (Input.GetButton("Sprint") ? boostThrustMult : 1f);
         fuel -= fuelPerN * thrust * Time.deltaTime;
 		fuel = Mathf.Clamp01(fuel);
+		boostTrail.startLifetime = boostTrailBaseRate * throttle * (Input.GetButton("Sprint") ? boostTrailEmitMult : 1f);
 
-		if (fuel > 0f && !Input.GetButton("Jump")) {
+		if (fuel > 0f)
 			rb.AddRelativeForce(0f, 0f, thrust);
-			boostTrail.enableEmission = true;
-        } else
-			boostTrail.enableEmission = false;
+		else
+			boostTrail.emissionRate = 0f;
 
 
 		//Wings and drag
@@ -91,26 +75,24 @@ public class AirplaneController : MonoBehaviour {
 			(Input.GetAxis("Vertical") - trim) * pitchTorque,
 			Input.GetAxis("Horizontal") * yawPortion * yawTorque,
 			Input.GetAxis("Horizontal") * rollTorque * -1);
+		if (Input.GetButton("Sprint"))
+			torque *= boostTorqueMult;
 
 		rb.AddRelativeTorque(Mathf.Clamp(sqrVel, minSqrVel, maxSqrVel) * torque);
 	}
 
 	public void StartUp () {
 		lastLaunchTime = Time.time;
+		rb.isKinematic = false;	//Only matters when leaving the ground
 		player.flying = true;
+		trails.SetActive(true);
+		boostTrail.enableEmission = true;
 		trailCam.SetActive(true);
 		FixedJoint joint = gameObject.GetComponent<FixedJoint>();
-		if (player.onShip) {
-			trails.SetActive(true);
-			boostTrail.enableEmission = true;
+		if (joint != null)
 			Destroy(joint);
-			rb.AddRelativeForce(launchForce * 10000f);
-			//rb.MoveRotation(Quaternion.FromToRotation(Vector3.forward, launchForce));
-		} else {
-			rb.isKinematic = true;
-			VTOL = true;
-
-		}
+		rb.AddRelativeForce(launchForce * 10000f);
+		rb.MoveRotation(Quaternion.FromToRotation(Vector3.forward, launchForce));
 	}
 
 	public void ShutDown () {
@@ -171,4 +153,5 @@ public class AirplaneController : MonoBehaviour {
 		GUI.Box(new Rect(Screen.width - 200, Screen.height - 30, 200, 30), "Fuel");
 		GUI.Box(new Rect(Screen.width - (200 * fuel), Screen.height - 30, 200 * fuel, 30), "");
 	}
+	*/
 }
