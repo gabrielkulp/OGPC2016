@@ -74,7 +74,12 @@ public class ColorfulFog : MonoBehaviour
     {
 		//free resources.
 		if (depthCamera != null) {
-			DestroyImmediate(depthCamera.gameObject);
+			try {
+				DestroyImmediate(depthCamera.gameObject);
+			} catch (UnityException e) {
+				Debug.LogWarning(e.Message);
+				Destroy(depthCamera.gameObject);
+			}
 		}
 
         if (depthTexture != null)

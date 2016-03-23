@@ -37,9 +37,14 @@ public class AirplaneController : MonoBehaviour {
 	bool VTOL = false;
 	float VTOLCompletion = 0f;
 
+	bool invertPitch = false;
+	ParticleSystem.EmissionModule trailEmission;
+
 	void Start () {
+		invertPitch = PlayerPrefs.GetInt("InvertFlight", 0) == 1 ? true : false;
 		rb = GetComponent<Rigidbody>();
-		ShutDown();
+		trailEmission = boostTrail.emission;
+        ShutDown();
     }
 
 	void FixedUpdate () {
@@ -56,7 +61,7 @@ public class AirplaneController : MonoBehaviour {
 				rb.AddRelativeForce(launchForce * 10000f);
 				//rb.MoveRotation(Quaternion.FromToRotation(Vector3.forward, launchForce));
 				trails.SetActive(true);
-				boostTrail.enableEmission = true;
+				trailEmission.enabled = true;
 			}
 			return;
 		}
@@ -71,10 +76,9 @@ public class AirplaneController : MonoBehaviour {
 
 		if (fuel > 0f && !Input.GetButton("Jump")) {
 			rb.AddRelativeForce(0f, 0f, thrust);
-			boostTrail.enableEmission = true;
-        } else
-			boostTrail.enableEmission = false;
-
+			trailEmission.enabled = true;
+		} else
+			trailEmission.enabled = false;
 
 		//Wings and drag
 		Vector3 dragDir = transform.InverseTransformDirection(rb.velocity);
@@ -88,7 +92,7 @@ public class AirplaneController : MonoBehaviour {
 
 		//Control
 		Vector3 torque = new Vector3(
-			(Input.GetAxis("Vertical") - trim) * pitchTorque,
+			(Input.GetAxis("Vertical") - trim) * pitchTorque * (invertPitch ? -1 : 1),
 			Input.GetAxis("Horizontal") * yawPortion * yawTorque,
 			Input.GetAxis("Horizontal") * rollTorque * -1);
 
@@ -96,13 +100,14 @@ public class AirplaneController : MonoBehaviour {
 	}
 
 	public void StartUp () {
+		player.GetComponent<AudioSource>().Stop();
 		lastLaunchTime = Time.time;
 		player.flying = true;
 		trailCam.SetActive(true);
 		FixedJoint joint = gameObject.GetComponent<FixedJoint>();
 		if (player.onShip) {
 			trails.SetActive(true);
-			boostTrail.enableEmission = true;
+			trailEmission.enabled = true;
 			Destroy(joint);
 			rb.AddRelativeForce(launchForce * 10000f);
 			//rb.MoveRotation(Quaternion.FromToRotation(Vector3.forward, launchForce));
@@ -117,9 +122,7 @@ public class AirplaneController : MonoBehaviour {
 		player.flying = false;
 		trailCam.SetActive(false);
 		trails.SetActive(false);
-		ParticleSystem.EmissionModule newEmitter = boostTrail.emission;
-		newEmitter.enabled = false;
-		//boostTrail. = newEmitter;
+		trailEmission.enabled = false;
 		if (player.onShip) {
 			transform.position = airship.transform.TransformPoint(dockPos);
 			transform.rotation = airship.transform.rotation;

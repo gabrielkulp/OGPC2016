@@ -1,0 +1,147 @@
+fileFormatVersion: 2
+guid: fbb9bbc93f13f1e49b64827f12daf103
+timeCreated: 1458761670
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: BigRock
+    100002: BigRock_001
+    100004: Lever
+    100006: Pillar
+    100008: Pillar_001
+    100010: Pillar_002
+    100012: Pillar_Tall
+    100014: Platform
+    100016: //RootNode
+    100018: RockFirstStep
+    100020: RockFirstStep_001
+    100022: RockSecondStep
+    100024: RockSecondStep_001
+    400000: BigRock
+    400002: BigRock_001
+    400004: Lever
+    400006: Pillar
+    400008: Pillar_001
+    400010: Pillar_002
+    400012: Pillar_Tall
+    400014: Platform
+    400016: //RootNode
+    400018: RockFirstStep
+    400020: RockFirstStep_001
+    400022: RockSecondStep
+    400024: RockSecondStep_001
+    2300000: BigRock
+    2300002: BigRock_001
+    2300004: Lever
+    2300006: Pillar
+    2300008: Pillar_001
+    2300010: Pillar_002
+    2300012: Pillar_Tall
+    2300014: Platform
+    2300016: RockFirstStep
+    2300018: RockFirstStep_001
+    2300020: RockSecondStep
+    2300022: RockSecondStep_001
+    3300000: BigRock
+    3300002: BigRock_001
+    3300004: Lever
+    3300006: Pillar
+    3300008: Pillar_001
+    3300010: Pillar_002
+    3300012: Pillar_Tall
+    3300014: Platform
+    3300016: RockFirstStep
+    3300018: RockFirstStep_001
+    3300020: RockSecondStep
+    3300022: RockSecondStep_001
+    4300000: BigRock_001
+    4300002: Pillar_002
+    4300004: Pillar_001
+    4300006: Pillar
+    4300008: Pillar_Tall
+    4300010: Lever
+    4300012: Platform
+    4300014: BigRock
+    4300016: RockSecondStep_001
+    4300018: RockFirstStep_001
+    4300020: RockFirstStep
+    4300022: RockSecondStep
+    6400000: BigRock
+    6400002: BigRock_001
+    6400004: Lever
+    6400006: Pillar
+    6400008: Pillar_001
+    6400010: Pillar_002
+    6400012: Pillar_Tall
+    6400014: Platform
+    6400016: RockFirstStep
+    6400018: RockFirstStep_001
+    6400020: RockSecondStep
+    6400022: RockSecondStep_001
+    7400000: Default Take
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 7
+    meshCompression: 0
+    addColliders: 1
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 0
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -168,6 +168,7 @@ public class Player : MonoBehaviour {
 	}
 
 	void Respawn() {
+		GetComponent<AudioSource>().Stop();
 		transform.position = respawnPos;
 	}
 

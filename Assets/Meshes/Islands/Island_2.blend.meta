@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 5ef79b21893e4724285e6944b4421817
-timeCreated: 1457463322
+timeCreated: 1458761783
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -52,6 +52,14 @@ ModelImporter:
     100088: Trunk_002
     100090: Trunk_003
     100092: Trunk_004
+    100094: PIllar1
+    100096: Pillar2
+    100098: Pillar3
+    100100: Pillar4
+    100102: Rock_004
+    100104: Rock_005
+    100106: Rock_006
+    100108: Rock_007
     400000: Circle
     400002: Circle_001
     400004: Circle_002
@@ -99,6 +107,14 @@ ModelImporter:
     400088: Trunk_002
     400090: Trunk_003
     400092: Trunk_004
+    400094: PIllar1
+    400096: Pillar2
+    400098: Pillar3
+    400100: Pillar4
+    400102: Rock_004
+    400104: Rock_005
+    400106: Rock_006
+    400108: Rock_007
     2300000: Circle
     2300002: Circle_001
     2300004: Circle_002
@@ -145,6 +161,14 @@ ModelImporter:
     2300086: Trunk_002
     2300088: Trunk_003
     2300090: Trunk_004
+    2300092: PIllar1
+    2300094: Pillar2
+    2300096: Pillar3
+    2300098: Pillar4
+    2300100: Rock_004
+    2300102: Rock_005
+    2300104: Rock_006
+    2300106: Rock_007
     3300000: Circle
     3300002: Circle_001
     3300004: Circle_002
@@ -191,6 +215,14 @@ ModelImporter:
     3300086: Trunk_002
     3300088: Trunk_003
     3300090: Trunk_004
+    3300092: PIllar1
+    3300094: Pillar2
+    3300096: Pillar3
+    3300098: Pillar4
+    3300100: Rock_004
+    3300102: Rock_005
+    3300104: Rock_006
+    3300106: Rock_007
     4300000: Sphere_008
     4300002: Sphere_007
     4300004: Cylinder_004
@@ -237,6 +269,14 @@ ModelImporter:
     4300086: Land2
     4300088: Land3
     4300090: Land1
+    4300092: Rock_007
+    4300094: Pillar4
+    4300096: Rock_006
+    4300098: Rock_005
+    4300100: Rock_004
+    4300102: Pillar3
+    4300104: Pillar2
+    4300106: PIllar1
     6400000: Circle
     6400002: Circle_001
     6400004: Circle_002
@@ -283,6 +323,14 @@ ModelImporter:
     6400086: Trunk_002
     6400088: Trunk_003
     6400090: Trunk_004
+    6400092: PIllar1
+    6400094: Pillar2
+    6400096: Pillar3
+    6400098: Pillar4
+    6400100: Rock_004
+    6400102: Rock_005
+    6400104: Rock_006
+    6400106: Rock_007
     7400000: Default Take
     9500000: //RootNode
   materials:
@@ -328,7 +376,7 @@ ModelImporter:
     normalSmoothAngle: 60
     normalImportMode: 0
     tangentImportMode: 3
-  importAnimation: 1
+  importAnimation: 0
   copyAvatar: 0
   humanDescription:
     human: []
@@ -343,7 +391,7 @@ ModelImporter:
     rootMotionBoneName: 
     hasTranslationDoF: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 2
+  animationType: 0
   humanoidOversampling: 1
   additionalBone: 0
   userData: 

@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: faaed60f76db16d49a8518c54bdfbadb
-timeCreated: 1457565416
+timeCreated: 1458761790
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -25,6 +25,31 @@ ModelImporter:
     100034: Rock_005
     100036: Rock_006
     100038: Rock_007
+    100040: Boulder
+    100042: Cube
+    100044: Cube_001
+    100046: Cube_002
+    100048: Cube_003
+    100050: Cube_004
+    100052: Cube_005
+    100054: Cube_006
+    100056: Ground
+    100058: Ground_001
+    100060: Ground_002
+    100062: Step
+    100064: Step_001
+    100066: Step_002
+    100068: Step_003
+    100070: Stone
+    100072: Stone_001
+    100074: Stone_002
+    100076: Tree
+    100078: Trees
+    100080: Trees_001
+    100082: Trees_002
+    100084: Trees_003
+    100086: Trees_004
+    100088: Trees_005
     400000: //RootNode
     400002: Land1
     400004: Land2
@@ -45,6 +70,31 @@ ModelImporter:
     400034: Rock_005
     400036: Rock_006
     400038: Rock_007
+    400040: Boulder
+    400042: Cube
+    400044: Cube_001
+    400046: Cube_002
+    400048: Cube_003
+    400050: Cube_004
+    400052: Cube_005
+    400054: Cube_006
+    400056: Ground
+    400058: Ground_001
+    400060: Ground_002
+    400062: Step
+    400064: Step_001
+    400066: Step_002
+    400068: Step_003
+    400070: Stone
+    400072: Stone_001
+    400074: Stone_002
+    400076: Tree
+    400078: Trees
+    400080: Trees_001
+    400082: Trees_002
+    400084: Trees_003
+    400086: Trees_004
+    400088: Trees_005
     2300000: Land1
     2300002: Land2
     2300004: Land3
@@ -64,6 +114,31 @@ ModelImporter:
     2300032: Rock_005
     2300034: Rock_006
     2300036: Rock_007
+    2300038: Boulder
+    2300040: Cube
+    2300042: Cube_001
+    2300044: Cube_002
+    2300046: Cube_003
+    2300048: Cube_004
+    2300050: Cube_005
+    2300052: Cube_006
+    2300054: Ground
+    2300056: Ground_001
+    2300058: Ground_002
+    2300060: Step
+    2300062: Step_001
+    2300064: Step_002
+    2300066: Step_003
+    2300068: Stone
+    2300070: Stone_001
+    2300072: Stone_002
+    2300074: Tree
+    2300076: Trees
+    2300078: Trees_001
+    2300080: Trees_002
+    2300082: Trees_003
+    2300084: Trees_004
+    2300086: Trees_005
     3300000: Land1
     3300002: Land2
     3300004: Land3
@@ -83,6 +158,31 @@ ModelImporter:
     3300032: Rock_005
     3300034: Rock_006
     3300036: Rock_007
+    3300038: Boulder
+    3300040: Cube
+    3300042: Cube_001
+    3300044: Cube_002
+    3300046: Cube_003
+    3300048: Cube_004
+    3300050: Cube_005
+    3300052: Cube_006
+    3300054: Ground
+    3300056: Ground_001
+    3300058: Ground_002
+    3300060: Step
+    3300062: Step_001
+    3300064: Step_002
+    3300066: Step_003
+    3300068: Stone
+    3300070: Stone_001
+    3300072: Stone_002
+    3300074: Tree
+    3300076: Trees
+    3300078: Trees_001
+    3300080: Trees_002
+    3300082: Trees_003
+    3300084: Trees_004
+    3300086: Trees_005
     4300000: Rock
     4300002: Rock_001
     4300004: Rock_007
@@ -102,6 +202,31 @@ ModelImporter:
     4300032: Land7
     4300034: Land2
     4300036: Land6
+    4300038: Stone_001
+    4300040: Stone_002
+    4300042: Stone
+    4300044: Boulder
+    4300046: Tree
+    4300048: Cube_006
+    4300050: Trees_005
+    4300052: Cube_005
+    4300054: Trees
+    4300056: Cube_004
+    4300058: Trees_001
+    4300060: Cube_003
+    4300062: Trees_002
+    4300064: Cube_002
+    4300066: Trees_003
+    4300068: Cube_001
+    4300070: Trees_004
+    4300072: Cube
+    4300074: Step_003
+    4300076: Step_002
+    4300078: Step_001
+    4300080: Step
+    4300082: Ground_002
+    4300084: Ground_001
+    4300086: Ground
     6400000: Land1
     6400002: Land2
     6400004: Land3
@@ -121,6 +246,31 @@ ModelImporter:
     6400032: Rock_005
     6400034: Rock_006
     6400036: Rock_007
+    6400038: Boulder
+    6400040: Cube
+    6400042: Cube_001
+    6400044: Cube_002
+    6400046: Cube_003
+    6400048: Cube_004
+    6400050: Cube_005
+    6400052: Cube_006
+    6400054: Ground
+    6400056: Ground_001
+    6400058: Ground_002
+    6400060: Step
+    6400062: Step_001
+    6400064: Step_002
+    6400066: Step_003
+    6400068: Stone
+    6400070: Stone_001
+    6400072: Stone_002
+    6400074: Tree
+    6400076: Trees
+    6400078: Trees_001
+    6400080: Trees_002
+    6400082: Trees_003
+    6400084: Trees_004
+    6400086: Trees_005
     7400000: Default Take
     9500000: //RootNode
   materials:
@@ -147,7 +297,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 10
+    globalScale: 13
     meshCompression: 0
     addColliders: 1
     importBlendShapes: 1
@@ -166,7 +316,7 @@ ModelImporter:
     normalSmoothAngle: 60
     normalImportMode: 0
     tangentImportMode: 3
-  importAnimation: 1
+  importAnimation: 0
   copyAvatar: 0
   humanDescription:
     human: []
@@ -181,7 +331,7 @@ ModelImporter:
     rootMotionBoneName: 
     hasTranslationDoF: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 2
+  animationType: 0
   humanoidOversampling: 1
   additionalBone: 0
   userData: 

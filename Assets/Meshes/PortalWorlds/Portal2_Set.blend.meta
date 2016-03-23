@@ -1,0 +1,207 @@
+fileFormatVersion: 2
+guid: 806f6c56862179b4bba1fab6f549cc11
+timeCreated: 1458761667
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Base
+    100002: Circle_001
+    100004: Circle_006
+    100006: Path
+    100008: Platform
+    100010: Platform_001
+    100012: Platform_002
+    100014: Platform_003
+    100016: //RootNode
+    100018: Rock_002
+    100020: Rocks
+    100022: Sphere
+    100024: Torch
+    100026: Torch_001
+    100028: Torch_002
+    100030: Torch_003
+    100032: Torch_004
+    100034: Torch_005
+    100036: Lever
+    100038: Path_001
+    100040: Path_002
+    100042: Path_003
+    100044: Path_004
+    400000: Base
+    400002: Circle_001
+    400004: Circle_006
+    400006: Path
+    400008: Platform
+    400010: Platform_001
+    400012: Platform_002
+    400014: Platform_003
+    400016: //RootNode
+    400018: Rock_002
+    400020: Rocks
+    400022: Sphere
+    400024: Torch
+    400026: Torch_001
+    400028: Torch_002
+    400030: Torch_003
+    400032: Torch_004
+    400034: Torch_005
+    400036: Lever
+    400038: Path_001
+    400040: Path_002
+    400042: Path_003
+    400044: Path_004
+    2300000: Base
+    2300002: Circle_001
+    2300004: Circle_006
+    2300006: Path
+    2300008: Platform
+    2300010: Platform_001
+    2300012: Platform_002
+    2300014: Platform_003
+    2300016: Rock_002
+    2300018: Rocks
+    2300020: Sphere
+    2300022: Torch
+    2300024: Torch_001
+    2300026: Torch_002
+    2300028: Torch_003
+    2300030: Torch_004
+    2300032: Torch_005
+    2300034: Lever
+    2300036: Path_001
+    2300038: Path_002
+    2300040: Path_003
+    2300042: Path_004
+    3300000: Base
+    3300002: Circle_001
+    3300004: Circle_006
+    3300006: Path
+    3300008: Platform
+    3300010: Platform_001
+    3300012: Platform_002
+    3300014: Platform_003
+    3300016: Rock_002
+    3300018: Rocks
+    3300020: Sphere
+    3300022: Torch
+    3300024: Torch_001
+    3300026: Torch_002
+    3300028: Torch_003
+    3300030: Torch_004
+    3300032: Torch_005
+    3300034: Lever
+    3300036: Path_001
+    3300038: Path_002
+    3300040: Path_003
+    3300042: Path_004
+    4300000: Circle_006
+    4300002: Torch_001
+    4300004: Torch_003
+    4300006: Torch_004
+    4300008: Torch_002
+    4300010: Torch
+    4300012: Torch_005
+    4300014: Rock_002
+    4300016: Rocks
+    4300018: Platform_003
+    4300020: Platform_002
+    4300022: Platform
+    4300024: Path
+    4300026: Circle_001
+    4300028: Platform_001
+    4300030: Base
+    4300032: Sphere
+    4300034: Lever
+    4300036: Path_004
+    4300038: Path_003
+    4300040: Path_002
+    4300042: Path_001
+    6400000: Base
+    6400002: Circle_001
+    6400004: Circle_006
+    6400006: Path
+    6400008: Platform
+    6400010: Platform_001
+    6400012: Platform_002
+    6400014: Platform_003
+    6400016: Rock_002
+    6400018: Rocks
+    6400020: Sphere
+    6400022: Torch
+    6400024: Torch_001
+    6400026: Torch_002
+    6400028: Torch_003
+    6400030: Torch_004
+    6400032: Torch_005
+    6400034: Lever
+    6400036: Path_001
+    6400038: Path_002
+    6400040: Path_003
+    6400042: Path_004
+    7400000: Default Take
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 13
+    meshCompression: 0
+    addColliders: 1
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 0
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

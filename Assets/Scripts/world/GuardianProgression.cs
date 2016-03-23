@@ -13,6 +13,8 @@ public class GuardianProgression : MonoBehaviour {
 	public TextMesh text;
 	public Transform portal;
 	public Transform gateObject;
+	public Compass compass;
+	public int nextCompassPos;
 	public Vector3 gateObjectGoalPos;
 	public Vector3 portalGoalPos;
 	string key;
@@ -55,6 +57,7 @@ public class GuardianProgression : MonoBehaviour {
 					text.text = questText;
 					break;
 				case 2:
+					FinishQuest();
 					text.text = completeText;
 					break;
 			}
@@ -70,6 +73,9 @@ public class GuardianProgression : MonoBehaviour {
 	}
 
 	void FinishQuest () {
-		//update map or whatever
+		if (compass.index != nextCompassPos) {
+			PlayerPrefs.SetInt("CompassIndex", nextCompassPos);
+			compass.index = nextCompassPos;
+		}
 	}
 }

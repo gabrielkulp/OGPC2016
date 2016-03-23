@@ -11,14 +11,14 @@ public class Switch : MonoBehaviour {
 	bool activated = false;
 
 	void Start () {
-		lever.localEulerAngles = Vector3.right * xRotLimit.x;
+		lever.localEulerAngles = Vector3.forward * xRotLimit.x;
 	}
 	
 	void Update () {
 		if (activated) {
-			lever.localRotation = Quaternion.Slerp(lever.localRotation, Quaternion.Euler(Vector3.right * xRotLimit.y), 0.01f);
-			target.position = Vector3.Lerp(target.position, targetPos, 0.01f);
-			target.rotation = Quaternion.Slerp(target.rotation, Quaternion.Euler(targetRot), 0.01f);
+			lever.localRotation = Quaternion.Slerp(lever.localRotation, Quaternion.Euler(Vector3.forward * xRotLimit.y), 0.01f);
+			target.localPosition = Vector3.Lerp(target.localPosition, targetPos, 0.01f);
+			target.localRotation = Quaternion.Slerp(target.localRotation, Quaternion.Euler(targetRot), 0.01f);
 		}
 	}
 
