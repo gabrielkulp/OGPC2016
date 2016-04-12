@@ -74,6 +74,9 @@ public class Player : MonoBehaviour {
 		//shipCam.fieldOfView = cam.fieldOfView;
 		if (Input.GetKeyUp(KeyCode.R))
 			Respawn();
+
+		if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyUp(KeyCode.Backspace))
+			swimming = !swimming;
 	}
 
 	//Fly, interact, move, view bob, gravity

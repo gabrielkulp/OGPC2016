@@ -9,6 +9,7 @@ public class Switch : MonoBehaviour {
 	public Vector3 targetPos;
 	public Vector3 targetRot;
 	bool activated = false;
+    public float lerpCoeff = 0.1f;
 
 	void Start () {
 		lever.localEulerAngles = Vector3.forward * xRotLimit.x;
@@ -16,15 +17,16 @@ public class Switch : MonoBehaviour {
 	
 	void Update () {
 		if (activated) {
-			lever.localRotation = Quaternion.Slerp(lever.localRotation, Quaternion.Euler(Vector3.forward * xRotLimit.y), 0.01f);
-			target.localPosition = Vector3.Lerp(target.localPosition, targetPos, 0.01f);
-			target.localRotation = Quaternion.Slerp(target.localRotation, Quaternion.Euler(targetRot), 0.01f);
+			lever.localRotation = Quaternion.Slerp(lever.localRotation, Quaternion.Euler(Vector3.forward * xRotLimit.y), lerpCoeff);
+			target.localPosition = Vector3.Lerp(target.localPosition, targetPos, lerpCoeff);
+			target.localRotation = Quaternion.Slerp(target.localRotation, Quaternion.Euler(targetRot), lerpCoeff);
 		}
 	}
 
 	void OnTriggerStay (Collider other) {
-		if (other.tag == "Player" && Input.GetButtonUp("Use")) {
-			activated = true;
+		if (other.tag == "Player" && Input.GetButton("Use")) {
+            target.gameObject.SetActive(true);
+            activated = true;
 		}
 	}
 }
