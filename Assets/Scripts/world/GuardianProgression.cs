@@ -25,14 +25,16 @@ public class GuardianProgression : MonoBehaviour {
 		key = "islandProgress" + id;
 		progress = PlayerPrefs.GetInt(key, 0);
 		if (progress != 0) {
-			gateObject.localPosition = gateObjectGoalPos;
+			if (gateObject != null)
+				gateObject.localPosition = gateObjectGoalPos;
 			portal.localPosition = portalGoalPos;
 		}
 	}
 	
 	void Update () {
 		if (progress != 0) {
-			gateObject.localPosition = Vector3.Lerp(gateObject.localPosition, gateObjectGoalPos, lerpCoeff);
+			if (gateObject != null)
+				gateObject.localPosition = Vector3.Lerp(gateObject.localPosition, gateObjectGoalPos, lerpCoeff);
 			if (progress == 1)
 				portal.localPosition = Vector3.Lerp(portal.localPosition, portalGoalPos, lerpCoeff);
 		}

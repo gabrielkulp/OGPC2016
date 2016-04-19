@@ -29,24 +29,11 @@ public class UIControl : MonoBehaviour {
 		wobbleTime.y = Random.Range(0, 2 * Mathf.PI);
 		wobbleTime.z = Random.Range(0, 2 * Mathf.PI);
 
-		if (PlayerPrefs.GetInt("InvertFlight", 0) == 1)
-			invertToggle.isOn = true;
-		else
-			invertToggle.isOn = false;
-		//invertToggle.isOn = (PlayerPrefs.GetInt("InvertFlight", 0) == 1) ? true : false;
+		invertToggle.isOn = (PlayerPrefs.GetInt("InvertFlight", 0) == 1) ? true : false;
 
-		float masVol;
-		float musVol;
-		float sfxVol;
-		if (mixer.GetFloat("MasterVol", out masVol)) {
-			masterSlider.value = masVol;
-		}
-		if (mixer.GetFloat("MusicVol", out musVol)) {
-			musicSlider.value = musVol;
-		}
-		if (mixer.GetFloat("SFXVol", out sfxVol)) {
-			sfxSlider.value = sfxVol;
-		}
+		masterSlider.value = PlayerPrefs.GetFloat("MasterVol", 0);
+		musicSlider.value = PlayerPrefs.GetFloat("MusicVol", 0);
+		sfxSlider.value = PlayerPrefs.GetFloat("SFXVol", 0);
 	}
 
 	void Update () {
@@ -102,13 +89,21 @@ public class UIControl : MonoBehaviour {
 
 	public void SliderMasterVol (Slider source) {
 		mixer.SetFloat("MasterVol", source.value);
-	}
+		PlayerPrefs.SetFloat("MasterVol", source.value);
+    }
 
 	public void SliderMusicVol (Slider source) {
 		mixer.SetFloat("MusicVol", source.value);
+		PlayerPrefs.SetFloat("MusicVol", source.value);
 	}
 
 	public void SliderSFXVol (Slider source) {
 		mixer.SetFloat("SFXVol", source.value);
+		PlayerPrefs.SetFloat("SFXVol", source.value);
+	}
+
+	public void SetGraphicsLevel (int level) {
+		if (QualitySettings.GetQualityLevel() != level)
+			QualitySettings.SetQualityLevel(level, true);
 	}
 }
