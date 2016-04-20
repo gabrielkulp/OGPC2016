@@ -44,7 +44,7 @@ public class GuardianProgression : MonoBehaviour {
 		progress = PlayerPrefs.GetInt(key, 0);
 
 		if (other.tag == "Player") {
-			if (progress == 0 && Input.GetMouseButtonUp(0)) {
+			if (progress == 0 && Input.GetButtonUp("Use")) {
 				progress = 1;
             }
 			

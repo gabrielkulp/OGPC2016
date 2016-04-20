@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class TextFade : MonoBehaviour {
+public class GliderTextFade : MonoBehaviour {
 	TextMesh text;
 	public string messageNormal = "Press E to fly";
 	public string messageTooFast = "Too fast to launch!";
