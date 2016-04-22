@@ -6,12 +6,13 @@ public class ShipTextFade : MonoBehaviour {
 	public Color nearColor = Color.white;
 	public Color farColor = Color.clear;
 	public float colorLerp = 0.1f;
-	public bool near = false;
+	bool near = false;
 	string content;
 
 	void Start () {
 		text.color = farColor;
 		content = text.text;
+		text.text = "";
 	}
 
 	void Update () {

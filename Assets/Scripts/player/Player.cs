@@ -11,6 +11,7 @@ public class Player : MonoBehaviour {
 
 	public AudioClip walkSound;
 	public AudioClip sprintSound;
+	public AudioClip respawnSound;
 
 	public AnimationCurve viewBobX;
 	public AnimationCurve viewBobY;
@@ -72,10 +73,10 @@ public class Player : MonoBehaviour {
 		fixedHead.gameObject.SetActive(!flying);
 
 		//shipCam.fieldOfView = cam.fieldOfView;
-		if (Input.GetKeyUp(KeyCode.R))
+		if (!flying && Input.GetButtonUp("Respawn"))
 			Respawn();
 
-		if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyUp(KeyCode.Backspace))
+		if (Input.GetKey(KeyCode.RightShift) && Input.GetKeyUp(KeyCode.Backspace))
 			swimming = !swimming;
 	}
 
@@ -172,7 +173,8 @@ public class Player : MonoBehaviour {
 
 	void Respawn() {
 		GetComponent<AudioSource>().Stop();
-		transform.position = respawnPos;
+        transform.position = respawnPos;
+		GetComponent<AudioSource>().PlayOneShot(respawnSound, 1f);
 	}
 
 

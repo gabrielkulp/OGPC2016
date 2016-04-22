@@ -35,7 +35,6 @@ public class AirshipInput : MonoBehaviour {
 	void OnTriggerStay (Collider other) {
 		if (other.tag == "Player") {
 			input.x = Input.GetAxis("Ship Steer");
-			input.y = Input.GetAxis("Ship Climb");
 			input.z += Input.GetAxis("Ship Throttle") * Time.deltaTime;
 			input.z = Mathf.Clamp(input.z, -1f, 1f);
 		}

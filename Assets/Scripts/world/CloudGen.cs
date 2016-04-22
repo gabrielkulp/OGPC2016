@@ -17,10 +17,11 @@ public class CloudGen : MonoBehaviour {
 			Vector3 pos = Random.insideUnitSphere * range;
 			
 			if (Random.value < probability.Evaluate(pos.magnitude / range)) {
-				Instantiate(
+				GameObject cloud =
+				(GameObject)Instantiate(
 					cloudPrefab[Mathf.RoundToInt(Random.Range(0, cloudPrefab.Length - 1f))],
 					pos + position, Quaternion.Euler(0f, Random.Range(-180f, 180f), 0f));
-
+				cloud.transform.parent = transform;
 			} else
 				count -= 1;
 		}

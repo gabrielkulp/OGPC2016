@@ -60,7 +60,10 @@ public class UIControl : MonoBehaviour {
 	}
 
 	public void ButtonResume () {
-		SceneManager.LoadScene(1);
+		if (PlayerPrefs.GetInt("islandProgress3", 0) == 2)
+			SceneManager.LoadScene(5);
+		else
+			SceneManager.LoadScene(1);
 	}
 
 	public void ButtonRestart () {

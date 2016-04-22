@@ -47,6 +47,11 @@ public class AirplaneController : MonoBehaviour {
         ShutDown();
     }
 
+	void Update () {
+		if (Input.GetButtonUp("Respawn"))
+			transform.Translate(0f, 20f, 0f);
+	}
+
 	void FixedUpdate () {
 		if (VTOL) {
 			float moveDelta = VTOLSpeed.Evaluate(VTOLCompletion) * Time.fixedDeltaTime;
@@ -119,6 +124,8 @@ public class AirplaneController : MonoBehaviour {
 	}
 
 	public void ShutDown () {
+		if (Time.timeSinceLevelLoad > 1f)
+			GetComponent<AudioSource>().Play();
 		player.flying = false;
 		trailCam.SetActive(false);
 		trails.SetActive(false);

@@ -11,6 +11,7 @@ public class Switch : MonoBehaviour {
 	public bool activated = false;
     public float lerpCoeff = 0.1f;
 	public GameObject text;
+	public AudioClip grindSound;
 	TextMesh textMesh;
 
 	void Start () {
@@ -35,6 +36,7 @@ public class Switch : MonoBehaviour {
 			target.gameObject.SetActive(true);
 			activated = true;
 			GetComponent<AudioSource>().Play();
+			GetComponent<AudioSource>().PlayOneShot(grindSound);
 			if (text != null) {
 				text.SetActive(true);
 			}

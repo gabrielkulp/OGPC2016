@@ -18,8 +18,13 @@ public class GuardianProgression : MonoBehaviour {
 	public Vector3 gateObjectGoalPos;
 	public Vector3 portalGoalPos;
 	string key;
+	bool playedMusic = false;
+	bool playedGrind = false;
 
 	void Start () {
+		introText = introText.Replace("\\n", "\n");
+		questText = questText.Replace("\\n", "\n");
+		completeText = completeText.Replace("\\n", "\n");
 		text.color = Color.black;
 		text.text = "";
 		key = "islandProgress" + id;
@@ -28,13 +33,18 @@ public class GuardianProgression : MonoBehaviour {
 			if (gateObject != null)
 				gateObject.localPosition = gateObjectGoalPos;
 			portal.localPosition = portalGoalPos;
+			playedGrind = true;
 		}
 	}
 	
 	void Update () {
 		if (progress != 0) {
-			if (gateObject != null)
+			if (gateObject != null) {
 				gateObject.localPosition = Vector3.Lerp(gateObject.localPosition, gateObjectGoalPos, lerpCoeff);
+				if (!playedGrind)
+					gateObject.GetComponent<AudioSource>().Play();
+				playedGrind = true;
+            }
 			if (progress == 1)
 				portal.localPosition = Vector3.Lerp(portal.localPosition, portalGoalPos, lerpCoeff);
 		}
@@ -76,6 +86,9 @@ public class GuardianProgression : MonoBehaviour {
 
 	void FinishQuest () {
 		if (compass.index != nextCompassPos) {
+			if (!playedMusic)
+				GetComponent<AudioSource>().Play();
+			playedMusic = true;
 			PlayerPrefs.SetInt("CompassIndex", nextCompassPos);
 			compass.index = nextCompassPos;
 		}
