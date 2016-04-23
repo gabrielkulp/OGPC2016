@@ -26,8 +26,4 @@ public class CloudGen : MonoBehaviour {
 				count -= 1;
 		}
 	}
-	
-	void Update () {
-		
-	}
 }

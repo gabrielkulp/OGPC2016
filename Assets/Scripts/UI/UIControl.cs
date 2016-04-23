@@ -22,6 +22,7 @@ public class UIControl : MonoBehaviour {
 	Vector3 wobbleTime;
 
 	void Start () {
+		Cursor.visible = true;
 		cam = camRig.GetChild(0);
 		targetTransform = defaultCamPos;
 		defaultCamPos.parent.GetComponent<UIMaskControl>().Open();

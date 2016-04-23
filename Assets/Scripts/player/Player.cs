@@ -48,9 +48,10 @@ public class Player : MonoBehaviour {
 	//Fix things when going to a side level
 	void OnLevelWasLoaded (int level) {
 		if (level > 1) {
-			swimming = false;
 			respawnPos = Vector3.zero;
 			transform.position = respawnPos;
+		} else {
+			respawnPos = transform.position;
 		}
 	}
 
@@ -76,7 +77,7 @@ public class Player : MonoBehaviour {
 		if (!flying && Input.GetButtonUp("Respawn"))
 			Respawn();
 
-		if (Input.GetKey(KeyCode.RightShift) && Input.GetKeyUp(KeyCode.Backspace))
+		if (Input.GetKey(KeyCode.RightShift) && Input.GetKeyUp(KeyCode.Return))
 			swimming = !swimming;
 	}
 
